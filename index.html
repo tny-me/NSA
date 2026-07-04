@@ -94,27 +94,54 @@
     font-size:0.8rem;color:var(--steel);
     letter-spacing:0.02em;
   }
-  nav{
-    background:var(--void-2);
-    border-bottom:1px solid var(--line);
-  }
-  .nav-inner{
-    max-width:1180px;margin:0 auto;
-    display:flex;flex-wrap:wrap;
-    padding:0 24px;
-  }
-  nav a{
-    color:var(--steel);text-decoration:none;
+  /* ============ MENÚ (:target, sin JS) ============ */
+  .menu-btn{
+    margin-left:auto;flex-shrink:0;cursor:pointer;
+    display:flex;align-items:center;gap:12px;
     font-family:'IBM Plex Mono',monospace;
-    font-weight:500;font-size:0.72rem;
-    letter-spacing:0.1em;text-transform:uppercase;
-    padding:13px 18px;
-    border-bottom:2px solid transparent;
-    transition:border-color .15s,color .15s;
+    font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--steel);text-decoration:none;
   }
-  nav a:hover,nav a:focus-visible{
-    color:var(--cyan);border-bottom-color:var(--cyan);
-    outline:none;
+  .menu-icon{display:flex;flex-direction:column;gap:5px;width:24px;}
+  .menu-icon span{
+    display:block;height:2px;background:var(--cyan);
+  }
+  .menu-btn:hover,.menu-btn:focus-visible{color:var(--cyan);outline:none;}
+
+  .menu-overlay{
+    position:fixed;inset:0;z-index:200;
+    background:var(--void);
+    visibility:hidden;opacity:0;
+    transition:opacity .25s ease,visibility .25s ease;
+    overflow-y:auto;
+  }
+  .menu-overlay:target{visibility:visible;opacity:1;}
+  .menu-close{
+    position:absolute;top:24px;right:24px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--steel);text-decoration:none;
+  }
+  .menu-close:hover{color:var(--cyan);}
+  .menu-overlay-inner{
+    max-width:640px;margin:0 auto;
+    padding:120px 24px 80px;
+  }
+  .menu-link{
+    display:flex;align-items:baseline;gap:22px;
+    padding:20px 0;border-bottom:1px solid var(--line);
+    font-family:'Saira Condensed',sans-serif;
+    font-size:clamp(1.6rem,4.5vw,2.4rem);font-weight:700;
+    text-transform:uppercase;letter-spacing:.01em;
+    color:var(--white);text-decoration:none;
+    transition:color .15s,padding-left .15s;
+  }
+  .menu-link:first-child{border-top:1px solid var(--line);}
+  .menu-link:hover,.menu-link:focus-visible{color:var(--cyan);padding-left:14px;outline:none;}
+  .menu-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.85rem;font-weight:400;
+    color:var(--cyan-dim);
   }
 
   /* ============ HERO ============ */
@@ -421,6 +448,8 @@
     .stat{border-left:none;border-top:1px solid var(--line);padding-top:14px;}
     .stat:first-child{border-top:none;padding-top:0;}
     section{padding:52px 20px;}
+    .menu-btn-text{display:none;}
+    .agency-id .sub{display:none;}
   }
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important;}
@@ -442,19 +471,26 @@
       <h1>Nuxiens Systems Agency</h1>
       <div class="sub">Creamos cobertura digital donde no existe, la protegemos y damos el acceso.</div>
     </div>
+    <a href="#menu-open" class="menu-btn">
+      <span class="menu-icon"><span></span><span></span><span></span></span>
+      <span class="menu-btn-text">Menú</span>
+    </a>
   </div>
-  <nav aria-label="Navegación principal">
-    <div class="nav-inner">
-      <a href="#mision">Misión</a>
-      <a href="#vision">Visión</a>
-      <a href="#programas">Programas</a>
-      <a href="#consultoria">Consultoría</a>
-      <a href="#operacion">Cómo operamos</a>
-      <a href="#elegibilidad">Elegibilidad</a>
-      <a href="#contacto">Contacto</a>
-    </div>
-  </nav>
 </header>
+
+<!-- Panel de navegación a pantalla completa (se abre/cierra vía :target, sin JS) -->
+<nav id="menu-open" class="menu-overlay" aria-label="Navegación principal">
+  <a href="#mision" class="menu-close">Cerrar ×</a>
+  <div class="menu-overlay-inner">
+    <a href="#mision" class="menu-link"><span class="menu-num">01</span>Misión</a>
+    <a href="#vision" class="menu-link"><span class="menu-num">02</span>Visión</a>
+    <a href="#programas" class="menu-link"><span class="menu-num">03</span>Programas</a>
+    <a href="#consultoria" class="menu-link"><span class="menu-num">04</span>Consultoría</a>
+    <a href="#operacion" class="menu-link"><span class="menu-num">05</span>Cómo operamos</a>
+    <a href="#elegibilidad" class="menu-link"><span class="menu-num">06</span>Elegibilidad</a>
+    <a href="#contacto" class="menu-link"><span class="menu-num">07</span>Contacto</a>
+  </div>
+</nav>
 
 <!-- HERO -->
 <section class="hero" id="mision" style="padding-top:76px;">
