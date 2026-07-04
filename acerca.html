@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acerca de — Nuxiens Systems Agency</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'none'; script-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Barra de estado del sistema -->
+<div class="status-bar"><span class="status-dot" aria-hidden="true"></span>Sistema operativo // Acceso público // Sin fines de lucro</div>
+
+<header>
+  <div class="header-inner">
+    <!-- Sello oficial NSA -->
+    <img class="seal" src="nsa-seal.png" width="86" height="86" alt="Sello de Nuxiens Systems Agency">
+    <div class="agency-id">
+      <div class="eyebrow">Agencia de infraestructura digital civil — NSA</div>
+      <h1>Nuxiens Systems Agency</h1>
+      <div class="sub">Creamos cobertura digital donde no existe, la protegemos y damos el acceso.</div>
+    </div>
+    <a href="#menu-open" class="menu-btn">
+      <span class="menu-icon"><span></span><span></span><span></span></span>
+      <span class="menu-btn-text">Menú</span>
+    </a>
+  </div>
+</header>
+
+<!-- Panel de navegación a pantalla completa (se abre/cierra vía :target, sin JS) -->
+<nav id="menu-open" class="menu-overlay" aria-label="Navegación principal">
+  <a href="index.html#mision" class="menu-close">Cerrar ×</a>
+  <div class="menu-overlay-inner">
+    <a href="acerca.html" class="menu-link" aria-current="page"><span class="menu-num">01</span>Acerca de</a>
+    <a href="index.html#mision" class="menu-link"><span class="menu-num">02</span>Misión</a>
+    <a href="index.html#vision" class="menu-link"><span class="menu-num">03</span>Visión</a>
+    <a href="index.html#programas" class="menu-link"><span class="menu-num">04</span>Programas</a>
+    <a href="index.html#consultoria" class="menu-link"><span class="menu-num">05</span>Consultoría</a>
+    <a href="index.html#operacion" class="menu-link"><span class="menu-num">06</span>Cómo operamos</a>
+    <a href="index.html#elegibilidad" class="menu-link"><span class="menu-num">07</span>Elegibilidad</a>
+    <a href="index.html#contacto" class="menu-link"><span class="menu-num">08</span>Contacto</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="acerca">
+  <div class="hero-network-wrap" aria-hidden="true">
+    <svg class="hero-network" viewBox="0 0 560 560">
+      <g class="hn-grid">
+        <circle cx="280" cy="280" r="200"/>
+        <ellipse cx="280" cy="280" rx="200" ry="70"/>
+        <ellipse cx="280" cy="280" rx="90" ry="200"/>
+        <ellipse cx="280" cy="280" rx="150" ry="200"/>
+        <line x1="80" y1="280" x2="480" y2="280"/>
+      </g>
+      <g class="hn-links">
+        <line x1="280" y1="280" x2="60" y2="130"/>
+        <line x1="280" y1="280" x2="520" y2="100"/>
+        <line x1="280" y1="280" x2="530" y2="410"/>
+        <line x1="280" y1="280" x2="80" y2="450"/>
+        <line x1="280" y1="280" x2="300" y2="540"/>
+      </g>
+      <g class="hn-nodes">
+        <circle cx="60" cy="130" r="4"/>
+        <circle cx="520" cy="100" r="4"/>
+        <circle cx="530" cy="410" r="4"/>
+        <circle cx="80" cy="450" r="4"/>
+        <circle cx="300" cy="540" r="4"/>
+      </g>
+    </svg>
+    <img class="hero-hub-seal" src="nsa-seal.png" alt="">
+  </div>
+  <div class="hero-inner">
+    <span class="directive">Doc. NSA/ABT-01 · Expediente institucional</span>
+    <h2>Acerca de<br>la <span class="hl">NSA</span>.</h2>
+    <p class="lede">
+      Quiénes somos, por qué existimos y qué reglas seguimos — sin letra pequeña.
+    </p>
+  </div>
+</section>
+
+<!-- ORIGEN -->
+<section id="origen">
+  <div class="section-inner">
+    <div class="file-ref">Doc. NSA/ABT-02</div>
+    <div class="section-head">
+      <div class="code">SECCIÓN 01 // ORIGEN</div>
+      <h3>Por qué nace la NSA</h3>
+    </div>
+    <div class="prose">
+      <p>Nuxiens Systems Agency nació de una frustración muy concreta: ver una y otra vez a comunidades, colectivos y pequeñas organizaciones pagar tarifas desproporcionadas por servicios de seguridad e infraestructura digital que apenas entendían — o simplemente quedarse sin ellos porque no podían costearlos.</p>
+      <p>La industria de la ciberseguridad y la consultoría técnica opera, en muchos casos, bajo una lógica de explotación: contratos opacos, tarifas infladas para quien no tiene poder de negociación, y jerga técnica usada para generar dependencia en lugar de autonomía.</p>
+      <p>La NSA existe para demostrar que se puede operar de otra forma: con el mismo rigor técnico y la misma disciplina operativa que usan las agencias más exigentes del mundo, pero puesta al servicio de quienes normalmente quedan fuera de ese nivel de atención.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISIÓN -->
+<section class="ops" id="mision-detalle">
+  <div class="section-inner">
+    <div class="file-ref">Doc. NSA/ABT-03</div>
+    <div class="section-head">
+      <div class="code">SECCIÓN 02 // MISIÓN</div>
+      <h3>Democratizar el acceso a infraestructura digital segura</h3>
+    </div>
+    <div class="prose">
+      <p>Construimos, protegemos y mantenemos sistemas para personas, comunidades y organizaciones civiles sin fines de lucro que hoy no pueden pagar lo que cuesta un proveedor comercial — sin letra pequeña, sin condiciones ocultas, sin cobrar de más a quien menos tiene.</p>
+      <p>Donde el mercado decide que no hay negocio, nosotros decidimos que sí hay misión.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISIÓN -->
+<section id="vision-detalle">
+  <div class="section-inner">
+    <div class="file-ref">Doc. NSA/ABT-04</div>
+    <div class="section-head">
+      <div class="code">SECCIÓN 03 // VISIÓN</div>
+      <h3>Un estándar garantizado, no un lujo</h3>
+    </div>
+    <div class="prose">
+      <p>Visualizamos un estándar mínimo de protección digital garantizado para cualquier persona u organización civil, sin importar su capacidad de pago.</p>
+      <p>Un mundo donde ninguna comunidad tenga que elegir entre operar sin protección o entregar el control de sus sistemas a cambio de tarifas que no puede sostener. La seguridad digital de calidad no debería ser un privilegio — debería ser una infraestructura básica, como el agua o la electricidad.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section id="valores">
+  <div class="section-inner">
+    <div class="file-ref">Doc. NSA/ABT-05</div>
+    <div class="section-head">
+      <div class="code">SECCIÓN 04 // PRINCIPIOS OPERATIVOS</div>
+      <h3>Cómo tomamos decisiones</h3>
+      <p>Cuatro reglas que no negociamos, sin importar el caso.</p>
+    </div>
+    <div class="grid-2">
+      <article class="card">
+        <div class="prog-code">NSA-V1 · Independencia</div>
+        <h4>Sin comisiones de por medio</h4>
+        <p>No dependemos de ningún proveedor ni recibimos comisión por recomendar herramientas o plataformas. Nuestro único criterio es lo que le conviene a quien atendemos.</p>
+      </article>
+      <article class="card">
+        <div class="prog-code">NSA-V2 · Transparencia</div>
+        <h4>Nada de jerga para generar dependencia</h4>
+        <p>Cada caso, cada auditoría y cada recomendación se documenta y se explica en lenguaje claro, para que el beneficiario entienda y controle su propio sistema.</p>
+      </article>
+      <article class="card">
+        <div class="prog-code">NSA-V3 · Rigor técnico</div>
+        <h4>El mismo estándar, pague o no pague</h4>
+        <p>Aplicamos los mismos estándares operativos que exigiríamos a cualquier infraestructura crítica, sin importar si el beneficiario paga o no por el servicio.</p>
+      </article>
+      <article class="card">
+        <div class="prog-code">NSA-V4 · Sostenibilidad ética</div>
+        <h4>La consultoría paga financia lo gratuito</h4>
+        <p>Financiamos la ayuda gratuita con consultoría de pago a quien sí puede costearla — nunca al revés. Nadie sin recursos subsidia a quien sí tiene.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PARTICIPA -->
+<section class="ops" id="participa">
+  <div class="section-inner">
+    <div class="file-ref">Doc. NSA/ABT-06</div>
+    <div class="section-head">
+      <div class="code">SECCIÓN 05 // SIGUIENTE PASO</div>
+      <h3>Sé parte de la misión</h3>
+      <p>Ya sea que necesites ayuda, quieras contratar consultoría, o busques sumarte como voluntario.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="index.html#elegibilidad">Solicitar asistencia</a>
+      <a class="btn btn-ghost" href="index.html#consultoria">Consultoría para empresas</a>
+      <a class="btn btn-ghost" href="index.html#contacto">Contacto</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="f-id">
+      <img src="nsa-seal.png" alt="" width="44" height="44">
+      <h6>Nuxiens Systems Agency</h6>
+      <p>Nuxiens Systems Agency (NSA) es una fundación civil sin fines de lucro que crea, protege y transfiere infraestructura digital segura para personas, comunidades y organizaciones civiles que hoy no pueden acceder a ella en el mercado comercial. Financiamos nuestros programas gratuitos con consultoría profesional de pago para empresas que sí pueden costearla — nunca al revés.</p>
+      <p class="f-disclaimer">NSA es un nombre e identidad visual propios de esta fundación. No es una agencia gubernamental ni mantiene afiliación con ninguna entidad de gobierno de ningún país.</p>
+      <p class="f-contact"><a href="mailto:contacto@nuxiens.org">contacto@nuxiens.org</a></p>
+    </div>
+    <div class="f-links">
+      <div>
+        <h6>Agencia</h6>
+        <a href="acerca.html">Acerca de</a>
+        <a href="index.html#mision">Misión</a>
+        <a href="index.html#vision">Visión</a>
+        <a href="index.html#programas">Programas</a>
+        <a href="index.html#operacion">Protocolo</a>
+      </div>
+      <div>
+        <h6>Participa</h6>
+        <a href="index.html#elegibilidad">Solicitar asistencia</a>
+        <a href="index.html#consultoria">Consultoría</a>
+        <a href="index.html#contacto">Voluntariado</a>
+        <a href="index.html#contacto">Donaciones</a>
+      </div>
+    </div>
+  </div>
+  <div class="f-bottom">ACCESO PÚBLICO // MISIÓN CIVIL — © 2026 Nuxiens Systems Agency</div>
+</footer>
+
+</body>
+</html>
