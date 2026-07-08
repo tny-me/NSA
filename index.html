@@ -22,11 +22,14 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+  html,body{height:100%;}
   body{
     background:var(--bg);color:var(--txt);
     font-family:var(--disp);line-height:1.6;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    min-height:100dvh;
+    display:flex;flex-direction:column;
   }
   ::selection{background:var(--cyan);color:#000;}
 
@@ -37,10 +40,10 @@
   }
   /* sello NSG — gira lentamente como un mundo */
   .seal{
-    position:fixed;top:50%;right:6vw;transform:translateY(-50%);
-    width:min(40vw,600px);aspect-ratio:1;
+    position:fixed;top:12vh;right:5vw;
+    width:min(20vw,240px);aspect-ratio:1;
     z-index:0;pointer-events:none;
-    opacity:.24;
+    opacity:.18;
     perspective:1100px;
   }
   .gface{
@@ -82,16 +85,16 @@
   /* ============ PORTADA ============ */
   .gate{
     position:relative;z-index:2;
-    min-height:100vh;
+    flex:1;min-height:0;
     display:flex;align-items:center;
-    padding:110px 7vw;
+    padding:28px clamp(20px,6vw,80px);
   }
   .gate-in{
-    max-width:600px;margin:0;width:100%;
+    max-width:680px;margin:0;width:100%;
   }
   .doc-ref{
     display:flex;align-items:center;gap:16px;
-    margin-bottom:44px;
+    margin-bottom:20px;
   }
   .doc-ref .mono{color:var(--dim);}
   .doc-ref::after{
@@ -99,26 +102,26 @@
   }
   h1{
     font-weight:500;
-    font-size:clamp(1.9rem,4vw,3rem);
-    line-height:1.22;
+    font-size:clamp(1.5rem,3.2vw,2.4rem);
+    line-height:1.2;
     letter-spacing:-0.015em;
   }
   .hairline{
     width:56px;height:1px;background:var(--grad);
-    margin:38px 0;
+    margin:20px 0;
   }
   .manifest{
-    font-size:1.02rem;line-height:1.85;
-    color:var(--body-c);max-width:520px;
+    font-size:.94rem;line-height:1.55;
+    color:var(--body-c);max-width:640px;
   }
   .manifest b{color:var(--txt);font-weight:500;}
-  .m2{margin-top:18px;}
+  .m2{margin-top:12px;}
 
   /* ============ EL BOTÓN ============ */
   .actions{
     display:flex;align-items:stretch;gap:16px;
     flex-wrap:nowrap;width:max-content;max-width:none;
-    margin-top:52px;
+    margin-top:26px;
   }
   .ghost-btn{
     display:flex;align-items:center;gap:22px;
@@ -172,16 +175,16 @@
   .key-btn:hover::before,.key-btn:focus-visible::before{animation-duration:1.6s;}
 
   .clause{
-    margin-top:22px;
+    margin-top:14px;
     font-family:var(--mono);font-size:9px;
     letter-spacing:.28em;text-transform:uppercase;color:var(--dim);
   }
 
   footer{
-    position:relative;z-index:2;
-    max-width:620px;margin:0 auto;
+    position:relative;z-index:2;flex-shrink:0;
+    max-width:680px;margin:0 auto;width:100%;
     display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    padding:24px 30px 90px;
+    padding:14px clamp(20px,6vw,80px) 18px;
     border-top:1px solid var(--line);
     font-family:var(--mono);font-size:9px;
     letter-spacing:.26em;text-transform:uppercase;color:var(--dim);
@@ -189,9 +192,18 @@
 
   @media (max-width:680px){
     .c-tr,.c-bl{display:none;}
-    .kb-in{gap:20px;padding:18px 24px;}
-    .actions{gap:12px;flex-wrap:wrap;width:auto;}
-    .seal{width:120vw;right:-40vw;opacity:.07;}
+    .gate{padding:14px clamp(18px,6vw,32px) 8px;}
+    h1{font-size:clamp(1.2rem,5.2vw,1.6rem);}
+    .doc-ref{margin-bottom:10px;}
+    .hairline{margin:10px 0;}
+    .manifest{font-size:.82rem;line-height:1.42;}
+    .m2{margin-top:7px;}
+    .actions{margin-top:14px;gap:10px;flex-wrap:wrap;width:auto;}
+    .ghost-btn{padding:13px 20px;}
+    .kb-in{gap:18px;padding:13px 20px;}
+    .clause{margin-top:10px;}
+    footer{padding:8px 18px 10px;font-size:8px;}
+    .seal{width:34vw;top:8vh;right:6vw;opacity:.1;}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
