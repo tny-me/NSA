@@ -20,6 +20,7 @@
     --gray:#63666D;
     --dim:#93969D;
     --stamp:#9A2B22;
+    --active:#2E7D46;
     --band-bg:#111214;
     --band-txt:#EDEEF0;
     --disp:'Space Grotesk',sans-serif;
@@ -117,6 +118,20 @@
     display:inline-block;background:var(--ink);color:var(--ink);
     border-radius:1px;padding:0 3px;user-select:none;
   }
+  .status{display:inline-flex;align-items:center;gap:8px;}
+  .status-dot{
+    position:relative;width:7px;height:7px;border-radius:50%;
+    background:var(--active);
+  }
+  .status-dot::before{
+    content:"";position:absolute;inset:-4px;border-radius:50%;
+    border:1px solid var(--active);
+    animation:ping 2.2s ease-out infinite;
+  }
+  @keyframes ping{
+    0%{transform:scale(.6);opacity:.8;}
+    100%{transform:scale(2.1);opacity:0;}
+  }
 
   h1{
     font-weight:500;
@@ -134,7 +149,7 @@
 
   /* ============ ACCIONES ============ */
   .memo-actions{
-    display:flex;gap:12px;flex-wrap:wrap;
+    display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;
     margin-top:18px;
   }
   .stamp-btn{
@@ -152,6 +167,53 @@
   }
   .stamp-btn:hover{background:var(--ink);color:var(--paper);}
   .stamp-btn .box{font-size:12px;line-height:1;}
+
+  /* ============ FORMULARIO DE SOLICITUD ============ */
+  details.request{display:block;flex:1 1 280px;max-width:380px;}
+  details.request summary{list-style:none;}
+  details.request summary::-webkit-details-marker{display:none;}
+  details.request summary.stamp-btn{cursor:pointer;}
+  details[open].request summary.stamp-btn{
+    animation:glowpulse .6s ease;
+  }
+  @keyframes glowpulse{
+    0%{box-shadow:0 0 0 0 rgba(17,18,20,.4);}
+    100%{box-shadow:0 0 0 12px rgba(17,18,20,0);}
+  }
+  .request-wrap{
+    display:grid;grid-template-rows:0fr;
+    transition:grid-template-rows .4s ease;
+  }
+  details[open] .request-wrap{grid-template-rows:1fr;}
+  .request-inner{
+    overflow:hidden;
+    opacity:0;transform:translateY(-6px);
+    transition:opacity .3s ease .05s,transform .3s ease .05s;
+  }
+  details[open] .request-inner{opacity:1;transform:translateY(0);}
+  .request-form{
+    padding-top:16px;margin-top:2px;
+    border-top:1px dashed var(--paper-line);
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .request-form label{
+    display:flex;flex-direction:column;gap:5px;
+    font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gray);
+  }
+  .request-form input,.request-form textarea{
+    font-family:var(--disp);font-size:.86rem;color:var(--ink);
+    background:transparent;border:none;border-bottom:1px solid var(--paper-line);
+    padding:6px 2px;resize:vertical;
+    transition:border-color .2s;
+  }
+  .request-form input:focus,.request-form textarea:focus{
+    outline:none;border-color:var(--ink);
+  }
+  .request-submit{
+    align-self:flex-start;margin-top:2px;cursor:pointer;
+    font:inherit;
+  }
 
   .memo-foot{
     margin-top:16px;
@@ -178,11 +240,14 @@
     .m2{margin-top:6px;}
     .memo-actions{margin-top:12px;gap:8px;}
     .stamp-btn{padding:9px 14px;font-size:9.5px;}
+    details.request{flex-basis:100%;max-width:none;}
+    .request-form{padding-top:12px;gap:10px;}
     .memo-foot{margin-top:10px;}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
     html{scroll-behavior:auto;}
+    details[open].request summary.stamp-btn{animation:none;}
   }
 </style>
 </head>
@@ -204,8 +269,8 @@
       <div class="mh-row"><span class="mh-label">De</span><span class="mh-value">UDSG // Comando</span></div>
       <div class="mh-row"><span class="mh-label">Ref</span><span class="mh-value mono">UDSG-00 / Declaración</span></div>
       <div class="mh-row"><span class="mh-label">Fecha</span><span class="mh-value mono" id="zulu">--:--:--Z</span></div>
-      <div class="mh-row"><span class="mh-label">Clasificación</span><span class="mh-value"><span class="redact">██████</span></span></div>
-      <div class="mh-row"><span class="mh-label">Origen</span><span class="mh-value"><span class="redact">████████</span></span></div>
+      <div class="mh-row"><span class="mh-label">Estado</span><span class="mh-value"><span class="status"><span class="status-dot"></span>Activo</span></span></div>
+      <div class="mh-row"><span class="mh-label">Modo</span><span class="mh-value">Bajo demanda</span></div>
     </div>
 
     <h1>Organización de ingeniería y desarrollo tecnológico.</h1>
@@ -223,9 +288,32 @@
     </p>
 
     <div class="memo-actions">
-      <a class="stamp-btn primary" href="mailto:acceso@udsg.dev">
-        <span class="box">☑</span> Solicitar despliegue
-      </a>
+      <details class="request">
+        <summary class="stamp-btn primary">
+          <span class="box">☑</span> Solicitar despliegue
+        </summary>
+        <div class="request-wrap">
+          <div class="request-inner">
+            <form class="request-form" action="mailto:acceso@udsg.dev" method="post" enctype="text/plain">
+              <label>Nombre
+                <input type="text" name="Nombre" required>
+              </label>
+              <label>Organización
+                <input type="text" name="Organización">
+              </label>
+              <label>Correo de contacto
+                <input type="email" name="Correo" required>
+              </label>
+              <label>Propósito del despliegue
+                <textarea name="Propósito" rows="3" required></textarea>
+              </label>
+              <button type="submit" class="stamp-btn primary request-submit">
+                <span class="box">☑</span> Enviar solicitud
+              </button>
+            </form>
+          </div>
+        </div>
+      </details>
       <a class="stamp-btn" href="#">
         <span class="box">☐</span> Despliegues
       </a>
