@@ -192,14 +192,20 @@ button{font:inherit;cursor:pointer;transition:background .15s,color .15s,border-
 .docview-toolbar button{font-family:var(--sans);font-size:12px;color:var(--ink-lo);background:none;border:1px solid var(--rule);border-radius:6px;width:30px;height:28px;display:flex;align-items:center;justify-content:center}
 .docview-toolbar button:hover{color:var(--ink);border-color:var(--ink-lo)}
 
-.docview-body{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:36px 24px}
-.docview-editable{width:min(720px,100%);font-size:14.5px;line-height:1.7;color:var(--ink);outline:none;min-height:100%}
+.docview-body{flex:1;overflow-y:auto;padding:36px 48px}
+.docview-editable{width:100%;max-width:1180px;margin:0 auto;font-size:14.5px;line-height:1.7;color:var(--ink);outline:none;min-height:100%}
 .docview-editable:empty::before{content:attr(data-ph);color:var(--ink-lo)}
 .docview-editable p{margin-bottom:12px}
-.docview-editable ul{margin:0 0 12px 20px}
+.docview-editable ul,.docview-editable ol{margin:0 0 12px 20px}
 .docview-editable li{margin-bottom:5px}
 .docview-editable h3{font-size:17px;font-weight:600;margin:18px 0 8px;letter-spacing:-.01em}
 .docview-editable b,.docview-editable strong{color:var(--ink)}
+
+.slash-menu{position:fixed;z-index:50;background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-sm);box-shadow:0 14px 34px rgba(20,20,20,.16);padding:6px;display:none;flex-direction:column;min-width:190px}
+.slash-menu.on{display:flex}
+.slash-menu .sm-label{font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-lo);padding:6px 10px 4px}
+.slash-menu button{text-align:left;font-family:var(--sans);font-size:13px;color:var(--ink);background:none;border:none;padding:8px 10px;border-radius:6px}
+.slash-menu button:hover{background:var(--paper-dim)}
 
 .board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(272px,1fr);gap:14px;align-items:start}
 .col{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius);display:flex;flex-direction:column;max-height:calc(100vh - 130px);transition:background .12s;overflow:hidden;box-shadow:0 1px 3px rgba(20,20,20,.05)}
@@ -689,8 +695,16 @@ td .due-pill.soon{color:var(--amber);background:var(--amber-tint)}
     <button data-cmd="removeFormat" title="Quitar formato">✕</button>
   </div>
   <div class="docview-body">
-    <div class="docview-editable" id="docBody" contenteditable data-ph="Escribe aquí el reporte: avances, decisiones, información técnica, lo que sea…"></div>
+    <div class="docview-editable" id="docBody" contenteditable data-ph="Escribe aquí el reporte: avances, decisiones, información técnica, lo que sea… (escribe / para opciones)"></div>
   </div>
+</div>
+
+<div class="slash-menu" id="slashMenu">
+  <div class="sm-label">Insertar</div>
+  <button data-cmd="heading">Título</button>
+  <button data-cmd="paragraph">Texto normal</button>
+  <button data-cmd="bullet">Lista con viñetas</button>
+  <button data-cmd="number">Lista numerada</button>
 </div>
 
 <div class="print-watermark" aria-hidden="true">
@@ -1292,6 +1306,45 @@ document.querySelectorAll('.docview-toolbar button').forEach(btn => {
     const cmd = btn.dataset.cmd;
     if (cmd === 'heading') document.execCommand('formatBlock', false, 'h3');
     else document.execCommand(cmd, false, null);
+    docBody.focus();
+  });
+});
+
+// -------- menú "/" tipo Notion --------
+const slashMenu = document.getElementById('slashMenu');
+function hideSlashMenu() { slashMenu.classList.remove('on'); }
+
+docBody.addEventListener('input', e => {
+  if (slashMenu.classList.contains('on')) {
+    if (e.data !== '/') hideSlashMenu();
+    return;
+  }
+  if (e.data !== '/') return;
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+  const rect = sel.getRangeAt(0).getBoundingClientRect();
+  if (!rect.width && !rect.height) return;
+  const mw = slashMenu.offsetWidth || 190;
+  slashMenu.style.top = (rect.bottom + 6) + 'px';
+  slashMenu.style.left = Math.min(rect.left, window.innerWidth - mw - 12) + 'px';
+  slashMenu.classList.add('on');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') hideSlashMenu();
+});
+document.addEventListener('click', e => {
+  if (slashMenu.classList.contains('on') && !slashMenu.contains(e.target) && e.target !== docBody) hideSlashMenu();
+});
+slashMenu.addEventListener('mousedown', e => e.preventDefault());
+slashMenu.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.execCommand('delete', false, null); // borra el "/" que abrió el menú
+    const cmd = btn.dataset.cmd;
+    if (cmd === 'heading') document.execCommand('formatBlock', false, 'h3');
+    else if (cmd === 'paragraph') document.execCommand('formatBlock', false, 'p');
+    else if (cmd === 'bullet') document.execCommand('insertUnorderedList', false, null);
+    else if (cmd === 'number') document.execCommand('insertOrderedList', false, null);
+    hideSlashMenu();
     docBody.focus();
   });
 });
