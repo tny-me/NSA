@@ -84,9 +84,36 @@ html.js-reveal .reveal.in{opacity:1;transform:none}
 /* ============ HERO DE PORTADA: video a todo el ancho, en carrusel ============ */
 .hero-full{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0;background:var(--dark)}
 .hero-mosaic{position:absolute;inset:0}
-.hero-mosaic .deck-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transform:scale(1.04);transition:opacity 1.6s ease,transform 7s linear}
+.hero-mosaic .deck-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transform:scale(1.04);transition:opacity 1.6s ease,transform 7s linear;filter:contrast(1.15) saturate(.78) brightness(.87)}
 .hero-mosaic .deck-video.is-active{opacity:1;transform:scale(1)}
-.hero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,8,7,.6) 0%,rgba(8,8,7,.32) 38%,rgba(8,8,7,.5) 72%,rgba(8,8,7,.85) 100%)}
+.hero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(5,8,12,.62) 0%,rgba(6,9,10,.3) 38%,rgba(5,7,9,.52) 72%,rgba(4,6,8,.88) 100%)}
+
+/* ============ HUD: marco técnico y lecturas en vivo sobre el hero ============ */
+.hud-frame{position:absolute;top:calc(var(--header-h) + 26px);left:26px;right:26px;bottom:26px;z-index:2;pointer-events:none}
+.hud-frame::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) top left/26px 1.5px no-repeat,
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) top left/1.5px 26px no-repeat,
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) top right/26px 1.5px no-repeat,
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) top right/1.5px 26px no-repeat,
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) bottom left/26px 1.5px no-repeat,
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) bottom left/1.5px 26px no-repeat,
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) bottom right/26px 1.5px no-repeat,
+    linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.4)) bottom right/1.5px 26px no-repeat;
+}
+.hud-tag{position:absolute;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.62);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.hud-tag .dot{width:5px;height:5px;border-radius:50%;background:#5FBF7A;flex:none;box-shadow:0 0 6px #5FBF7A;animation:hud-pulse 1.8s ease-in-out infinite}
+@keyframes hud-pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hud-tl{top:14px;left:14px}
+.hud-tr{top:14px;right:14px}
+.hud-bl{bottom:14px;left:14px}
+.hud-br{bottom:14px;right:14px}
+@media(max-width:640px){
+  .hud-frame{top:calc(var(--header-h) + 14px);left:14px;right:14px;bottom:14px}
+  .hud-tr,.hud-tl{font-size:8.5px}
+  .hud-tl{max-width:52vw}
+}
 .hero-overlay{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:calc(var(--header-h) + 40px) 32px 64px;text-align:center;color:#fff}
 .hero-overlay .eyebrow{justify-content:center;color:#fff}
 .hero-overlay .eyebrow .idx{color:rgba(255,255,255,.6)}
@@ -98,6 +125,23 @@ html.js-reveal .reveal.in{opacity:1;transform:none}
 .hero-dots span{width:22px;height:3px;background:rgba(255,255,255,.3);transition:background .3s}
 .hero-dots span.is-active{background:#fff}
 @media(max-width:640px){.hero-dots{bottom:18px}}
+
+/* ============ MANIFIESTO (declaración de peso tras el hero) ============ */
+.manifesto{font-size:clamp(23px,3.3vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.2;max-width:960px;margin:0 auto;color:var(--ink);text-align:center}
+.manifesto .hl{color:var(--red)}
+
+/* ============ PIPELINE: proceso en pasos conectados ============ */
+.pipeline{margin-top:52px;position:relative}
+.pipeline-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}
+.pipeline-grid::before{content:"";position:absolute;top:17px;left:0;right:0;height:1px;background:var(--rule)}
+.pipeline-step{position:relative;padding-top:48px}
+.pipeline-step .num{position:absolute;top:0;left:0;width:34px;height:34px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink);z-index:1}
+.pipeline-step h3{font-size:16.5px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
+.pipeline-step p{font-size:13px;line-height:1.6;color:var(--ink-lo)}
+@media(max-width:760px){
+  .pipeline-grid{grid-template-columns:1fr;gap:32px}
+  .pipeline-grid::before{display:none}
+}
 
 /* ============ SECCIONES ============ */
 .section{padding:112px 32px;position:relative;overflow:hidden}

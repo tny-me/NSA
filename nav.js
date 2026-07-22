@@ -31,6 +31,8 @@
   // con reduced-motion se queda en el primer poster, sin reproducir ni rotar
   const heroVideos = document.querySelectorAll('.hero-mosaic .deck-video');
   const heroDots = document.querySelectorAll('.hero-dots span');
+  const hudLive = document.querySelector('.hud-live');
+  const hudIdx = document.querySelector('.hud-idx');
   if (heroVideos.length) {
     const showSlide = (i) => {
       const v = heroVideos[i];
@@ -38,6 +40,8 @@
       v.play().catch(() => {});
       v.classList.add('is-active');
       if (heroDots[i]) heroDots[i].classList.add('is-active');
+      if (hudLive) hudLive.textContent = v.dataset.industry || '';
+      if (hudIdx) hudIdx.textContent = String(i + 1).padStart(2, '0');
     };
     showSlide(0);
     if (heroVideos.length > 1 && !reduceMotion) {
