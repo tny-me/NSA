@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UDSG — United Deployment Systems Group</title>
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -66,21 +68,26 @@
     color:var(--ink-soft); background:transparent; cursor:pointer;
   }
 
-  /* ---------------- CHIP ROW (Palantir-style tag nav) ---------------- */
+  /* ---------------- CHIP ROW (carrusel Apple/Palantir: chips que se llenan) ---------------- */
   .chip-row{
-    position:sticky; top:64px; z-index:40;
     display:flex; gap:10px; padding:14px 40px 18px;
-    background:rgba(233,233,228,0.92); backdrop-filter:blur(8px);
     overflow-x:auto; scrollbar-width:none;
   }
   .chip-row::-webkit-scrollbar{display:none;}
   .chip{
-    flex:0 0 auto; font-size:13px; color:var(--ink-soft);
-    padding:9px 18px; border-radius:999px; background:rgba(255,255,255,0.6);
-    text-decoration:none; white-space:nowrap; transition:background 0.2s ease, color 0.2s ease;
+    position:relative; flex:0 0 auto; font-family:inherit; font-size:13px; color:var(--ink-soft);
+    padding:9px 18px; border-radius:999px; background:rgba(255,255,255,0.6); border:none;
+    cursor:pointer; white-space:nowrap; overflow:hidden; transition:color 0.25s ease;
   }
-  .chip.active{background:var(--ink); color:#fff;}
+  .chip .chip-fill{position:absolute; inset:0; width:0%; background:var(--ink); z-index:0;}
+  .chip .chip-label{position:relative; z-index:1;}
+  .chip.active{color:#fff;}
   .chip:hover:not(.active){background:var(--paper);}
+
+  /* ---------------- HERO ILLUSTRATION (varias piezas, una visible a la vez) ---------------- */
+  .hero-illustration{position:relative; width:100%; aspect-ratio:560/400;}
+  .hero-illustration .sysmap{position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity 0.5s ease;}
+  .hero-illustration .sysmap.is-active{opacity:1;}
 
   /* ---------------- HERO (dark rounded card, inset from viewport edge) ---------------- */
   .hero-wrap{padding:6px 12px 0;}
@@ -331,14 +338,14 @@
   </div>
 </nav>
 
-<div class="chip-row">
-  <a href="#caps" class="chip active">Deployment Model</a>
-  <a href="#caps" class="chip">Desarrollo de software</a>
-  <a href="#caps" class="chip">Integración de sistemas</a>
-  <a href="#caps" class="chip">Automatización</a>
-  <a href="#caps" class="chip">IA aplicada</a>
-  <a href="#sectors" class="chip">Sectores</a>
-  <a href="#company" class="chip">Compañía</a>
+<div class="chip-row" id="chipRow">
+  <button type="button" class="chip active" data-i="0"><span class="chip-fill"></span><span class="chip-label">Deployment Model</span></button>
+  <button type="button" class="chip" data-i="1"><span class="chip-fill"></span><span class="chip-label">Desarrollo de software</span></button>
+  <button type="button" class="chip" data-i="2"><span class="chip-fill"></span><span class="chip-label">Integración de sistemas</span></button>
+  <button type="button" class="chip" data-i="3"><span class="chip-fill"></span><span class="chip-label">Automatización</span></button>
+  <button type="button" class="chip" data-i="4"><span class="chip-fill"></span><span class="chip-label">IA aplicada</span></button>
+  <button type="button" class="chip" data-i="5"><span class="chip-fill"></span><span class="chip-label">Sectores</span></button>
+  <button type="button" class="chip" data-i="6"><span class="chip-fill"></span><span class="chip-label">Compañía</span></button>
 </div>
 
 <!-- ================= HERO ================= -->
@@ -346,47 +353,118 @@
 <section class="hero">
   <div class="hero-top">
     <div>
-      <div class="eyebrow load-in" style="transition-delay:0.05s;"><span class="dash"></span>Private technology and software engineering</div>
-      <h1 class="load-in" style="transition-delay:0.15s;">Construimos tecnología para operaciones reales.</h1>
-      <p class="load-in" style="transition-delay:0.25s;">UDSG diseña, desarrolla e implementa software, plataformas e infraestructura digital para organizaciones que necesitan resolver procesos específicos y ampliar su capacidad tecnológica.</p>
+      <div class="eyebrow load-in" style="transition-delay:0.05s;"><span class="dash"></span><span id="heroEyebrow">Deployment Model</span></div>
+      <h1 class="load-in" id="heroTitle" style="transition-delay:0.15s;">Del problema a la implementación.</h1>
+      <p class="load-in" id="heroDesc" style="transition-delay:0.25s;">Cinco etapas, una sola responsabilidad continua: comprender, diseñar, construir, desplegar y operar — hasta que el sistema funcione dentro de la operación real.</p>
       <div class="hero-actions load-in" style="transition-delay:0.35s;">
         <a href="#contact" class="btn-primary">Iniciar un proyecto</a>
         <a href="#caps" class="btn-ghost">Explorar capacidades →</a>
       </div>
     </div>
     <div class="load-in" style="transition-delay:0.3s;">
-      <!-- Blueprint técnico: infraestructura de software (servidor, terminal, base de datos), no imagería militar -->
-      <svg class="sysmap" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-        <g>
-          <rect x="60" y="30" width="200" height="120" rx="4"/>
-          <line x1="60" y1="55" x2="260" y2="55"/>
-          <circle cx="75" cy="42" r="3"/>
-          <line x1="80" y1="80" x2="200" y2="80"/>
-          <line x1="80" y1="95" x2="230" y2="95"/>
-          <line x1="80" y1="110" x2="180" y2="110"/>
-          <line x1="80" y1="125" x2="220" y2="125"/>
-        </g>
-        <g>
-          <rect x="330" y="20" width="170" height="60" rx="3"/>
-          <rect x="330" y="90" width="170" height="60" rx="3"/>
-          <circle cx="345" cy="35" r="2.5" fill="#5B8AFF" stroke="none"/>
-          <circle cx="345" cy="105" r="2.5" fill="#5B8AFF" stroke="none"/>
-          <line x1="358" y1="35" x2="480" y2="35"/>
-          <line x1="358" y1="105" x2="480" y2="105"/>
-        </g>
-        <path d="M260 90 H300 V50 H330" stroke-dasharray="3 4" stroke="#5B8AFF"/>
-        <path d="M260 110 H300 V120 H330" stroke-dasharray="3 4" stroke="#5B8AFF"/>
-        <g>
-          <path d="M40 320 H520" />
-          <path d="M40 320 V210 M180 320 V250 M320 320 V180 M460 320 V270"/>
-          <path d="M40 210 H70 M180 250 H210 M320 180 H350 M460 270 H490"/>
-        </g>
-        <g font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">
-          <text x="60" y="168">APP LAYER</text>
-          <text x="330" y="168">DATA LAYER</text>
-          <text x="40" y="342">THROUGHPUT / NODE</text>
-        </g>
-      </svg>
+      <!-- Blueprint técnico: una ilustración por chip, sin imágenes fotográficas -->
+      <div class="hero-illustration" id="heroIllustration">
+        <svg class="sysmap is-active" data-slide="0" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
+          <line x1="80" y1="140" x2="480" y2="140"/>
+          <circle cx="80" cy="140" r="24"/>
+          <circle cx="180" cy="140" r="24"/>
+          <circle cx="280" cy="140" r="24"/>
+          <circle cx="380" cy="140" r="24"/>
+          <circle cx="480" cy="140" r="24" stroke="#5B8AFF"/>
+          <circle cx="480" cy="140" r="4" fill="#5B8AFF" stroke="none"/>
+          <g font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">
+            <text x="55" y="200">COMPRENDER</text>
+            <text x="152" y="200">DISEÑAR</text>
+            <text x="253" y="200">CONSTRUIR</text>
+            <text x="349" y="200">DESPLEGAR</text>
+            <text x="459" y="200">OPERAR</text>
+            <text x="40" y="260">DEPLOYMENT MODEL / 5 STAGES</text>
+          </g>
+          <path d="M40 300 H520" stroke-dasharray="2 5"/>
+        </svg>
+        <svg class="sysmap" data-slide="1" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
+          <rect x="60" y="40" width="440" height="280" rx="6"/>
+          <line x1="60" y1="72" x2="500" y2="72"/>
+          <circle cx="78" cy="56" r="3" fill="#5B8AFF" stroke="none"/>
+          <circle cx="94" cy="56" r="3"/>
+          <circle cx="110" cy="56" r="3"/>
+          <g font-family="IBM Plex Mono" font-size="10" fill="#7A8199" stroke="none">
+            <text x="90" y="105">function operar(sistema) {</text>
+            <text x="110" y="128">construir(problema);</text>
+            <text x="110" y="151" fill="#5B8AFF">desplegar(sistema);</text>
+            <text x="110" y="174">operar.continuo = true;</text>
+            <text x="90" y="197">}</text>
+          </g>
+          <line x1="90" y1="230" x2="330" y2="230"/>
+          <line x1="90" y1="248" x2="270" y2="248"/>
+          <text x="60" y="352" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">DESARROLLO DE SOFTWARE</text>
+        </svg>
+        <svg class="sysmap" data-slide="2" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
+          <circle cx="280" cy="170" r="30"/>
+          <circle cx="280" cy="170" r="4" fill="#5B8AFF" stroke="none"/>
+          <circle cx="120" cy="80" r="20"/>
+          <circle cx="440" cy="80" r="20"/>
+          <circle cx="120" cy="270" r="20"/>
+          <circle cx="440" cy="270" r="20"/>
+          <line x1="138" y1="95" x2="255" y2="155" stroke-dasharray="3 4"/>
+          <line x1="422" y1="95" x2="305" y2="155" stroke-dasharray="3 4"/>
+          <line x1="138" y1="255" x2="255" y2="188" stroke-dasharray="3 4"/>
+          <line x1="422" y1="255" x2="305" y2="188" stroke-dasharray="3 4"/>
+          <text x="40" y="350" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">INTEGRACIÓN DE SISTEMAS / N NODOS</text>
+        </svg>
+        <svg class="sysmap" data-slide="3" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
+          <circle cx="280" cy="170" r="100"/>
+          <path d="M280 70 a100 100 0 0 1 87 50" stroke="#5B8AFF"/>
+          <circle cx="280" cy="70" r="4" fill="#5B8AFF" stroke="none"/>
+          <circle cx="180" cy="170" r="3"/>
+          <circle cx="280" cy="270" r="3"/>
+          <circle cx="380" cy="170" r="3"/>
+          <text x="248" y="176" font-family="IBM Plex Mono" font-size="11" fill="#7A8199" stroke="none">AUTO</text>
+          <text x="40" y="330" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">AUTOMATIZACIÓN / CICLO CONTINUO</text>
+        </svg>
+        <svg class="sysmap" data-slide="4" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
+          <circle cx="100" cy="100" r="6"/><circle cx="100" cy="180" r="6"/><circle cx="100" cy="260" r="6"/>
+          <circle cx="280" cy="70" r="6"/><circle cx="280" cy="140" r="6" fill="#5B8AFF" stroke="none"/><circle cx="280" cy="210" r="6"/><circle cx="280" cy="280" r="6"/>
+          <circle cx="460" cy="120" r="6"/><circle cx="460" cy="220" r="6"/>
+          <g stroke-dasharray="2 4">
+            <line x1="100" y1="100" x2="280" y2="70"/>
+            <line x1="100" y1="100" x2="280" y2="140"/>
+            <line x1="100" y1="180" x2="280" y2="140"/>
+            <line x1="100" y1="180" x2="280" y2="210"/>
+            <line x1="100" y1="260" x2="280" y2="210"/>
+            <line x1="100" y1="260" x2="280" y2="280"/>
+            <line x1="280" y1="70" x2="460" y2="120"/>
+            <line x1="280" y1="140" x2="460" y2="120"/>
+            <line x1="280" y1="210" x2="460" y2="220"/>
+            <line x1="280" y1="280" x2="460" y2="220"/>
+          </g>
+          <text x="40" y="350" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">IA APLICADA / INFERENCIA CONTROLADA</text>
+        </svg>
+        <svg class="sysmap" data-slide="5" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
+          <rect x="60" y="40" width="200" height="120" rx="4"/>
+          <rect x="300" y="40" width="200" height="120" rx="4"/>
+          <rect x="60" y="200" width="200" height="120" rx="4"/>
+          <rect x="300" y="200" width="200" height="120" rx="4" stroke="#5B8AFF"/>
+          <circle cx="76" cy="56" r="3" fill="#5B8AFF" stroke="none"/>
+          <g font-family="IBM Plex Mono" font-size="10" fill="#7A8199" stroke="none">
+            <text x="80" y="100">EMPRESAS</text>
+            <text x="320" y="100">EDUCACIÓN</text>
+            <text x="80" y="260">ORGANIZACIONES</text>
+            <text x="320" y="260">OPERACIONES</text>
+          </g>
+        </svg>
+        <svg class="sysmap" data-slide="6" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
+          <rect x="140" y="60" width="280" height="260"/>
+          <line x1="140" y1="130" x2="420" y2="130"/>
+          <line x1="140" y1="200" x2="420" y2="200"/>
+          <line x1="140" y1="260" x2="420" y2="260"/>
+          <line x1="210" y1="60" x2="210" y2="320"/>
+          <line x1="280" y1="60" x2="280" y2="320"/>
+          <line x1="350" y1="60" x2="350" y2="320"/>
+          <circle cx="158" cy="80" r="3" fill="#5B8AFF" stroke="none"/>
+          <text x="40" y="360" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">UNITED DEPLOYMENT SYSTEMS GROUP</text>
+        </svg>
+      </div>
     </div>
   </div>
   <div class="hero-meta">
@@ -622,6 +700,85 @@
     });
   }, { threshold: 0.3, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.engage-item, .proc-step').forEach(el => io.observe(el));
+
+  // ---- CARRUSEL DE CHIPS: cada chip se llena como barra de progreso y avanza solo ----
+  (function(){
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const SLIDE_MS = 6000;
+    const slides = [
+      { eyebrow:'Deployment Model', title:'Del problema a la implementación.', desc:'Cinco etapas, una sola responsabilidad continua: comprender, diseñar, construir, desplegar y operar — hasta que el sistema funcione dentro de la operación real.' },
+      { eyebrow:'Desarrollo de software', title:'Software construido alrededor del problema.', desc:'Plataformas web, aplicaciones empresariales, herramientas internas y sistemas administrativos a medida — no plantillas genéricas adaptadas a la fuerza.' },
+      { eyebrow:'Integración de sistemas', title:'Todo conectado, nada aislado.', desc:'Conectamos bases de datos, servicios y herramientas de terceros con la operación existente, sin duplicar información ni procesos.' },
+      { eyebrow:'Automatización', title:'Menos trabajo manual, más operación.', desc:'Digitalizamos procesos, flujos de trabajo, generación documental y seguimiento operativo para que tu equipo deje de repetir tareas.' },
+      { eyebrow:'IA aplicada', title:'Inteligencia artificial, con control.', desc:'Asistentes, análisis, clasificación y búsqueda documental integrados en procesos controlados — no experimentos sueltos.' },
+      { eyebrow:'Sectores', title:'Tecnología aplicable a organizaciones reales.', desc:'Empresas, instituciones educativas, organizaciones y operaciones especializadas que no pueden resolverse con productos comerciales genéricos.' },
+      { eyebrow:'Compañía', title:'United Deployment Systems Group.', desc:'Una empresa privada de tecnología e ingeniería de software que diseña, desarrolla, integra y opera soluciones digitales de principio a fin.' }
+    ];
+
+    const chips = Array.from(document.querySelectorAll('#chipRow .chip'));
+    const svgs = Array.from(document.querySelectorAll('#heroIllustration .sysmap'));
+    const heroEyebrow = document.getElementById('heroEyebrow');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroDesc = document.getElementById('heroDesc');
+    if (!chips.length || !svgs.length) return;
+
+    let active = 0;
+    let advanceTimer = null;
+
+    function paintContent(i){
+      const s = slides[i];
+      if (!s) return;
+      heroEyebrow.textContent = s.eyebrow;
+      heroTitle.textContent = s.title;
+      heroDesc.textContent = s.desc;
+      svgs.forEach(svg => svg.classList.toggle('is-active', svg.dataset.slide === String(i)));
+    }
+
+    function fillChip(chip){
+      const fill = chip.querySelector('.chip-fill');
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      // forzar reflow para reiniciar la transición
+      // eslint-disable-next-line no-unused-expressions
+      fill.offsetHeight;
+      if (reduceMotion) { fill.style.width = '100%'; return; }
+      requestAnimationFrame(() => {
+        fill.style.transition = `width ${SLIDE_MS}ms linear`;
+        fill.style.width = '100%';
+      });
+    }
+
+    function resetChip(chip){
+      const fill = chip.querySelector('.chip-fill');
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+    }
+
+    function goTo(i, userInitiated){
+      active = (i + slides.length) % slides.length;
+      chips.forEach((chip, idx) => {
+        chip.classList.toggle('active', idx === active);
+        if (idx === active) fillChip(chip); else resetChip(chip);
+      });
+      paintContent(active);
+      if (advanceTimer) clearTimeout(advanceTimer);
+      if (!reduceMotion) advanceTimer = setTimeout(() => goTo(active + 1), SLIDE_MS);
+    }
+
+    chips.forEach((chip, idx) => {
+      chip.addEventListener('click', () => goTo(idx, true));
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (advanceTimer) clearTimeout(advanceTimer);
+      } else {
+        goTo(active);
+      }
+    });
+
+    goTo(0);
+  })();
 </script>
 
 </body>
