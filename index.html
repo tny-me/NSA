@@ -292,41 +292,42 @@
 
   /* ---------------- PROCESS (stepper, not photo) ---------------- */
   .process{background:var(--navy); color:var(--paper-text); padding:120px 48px;}
-  .proc-line-wrap{max-width:1180px; margin:0 auto; position:relative; padding-top:22px;}
+  .proc-line-wrap{max-width:960px; margin:0 auto; position:relative; padding-left:70px;}
 
-  /* pista del flujo: línea + pulso viajando de nodo en nodo, en bucle continuo */
-  .proc-flow-track{position:absolute; top:44px; left:0; right:0; height:1px; background:var(--line-on-dark); z-index:0; overflow:visible;}
+  /* pista vertical: línea + pulso descendiendo de capa en capa, en bucle continuo */
+  .proc-flow-track{position:absolute; top:25px; bottom:25px; left:25px; width:1px; background:var(--line-on-dark); z-index:0;}
   .proc-flow-track::before, .proc-flow-track::after{
-    content:''; position:absolute; top:-3px; width:1px; height:7px; background:var(--line-on-dark);
+    content:''; position:absolute; left:-3px; height:1px; width:7px; background:var(--line-on-dark);
   }
-  .proc-flow-track::before{left:0;} .proc-flow-track::after{right:0;}
+  .proc-flow-track::before{top:0;} .proc-flow-track::after{bottom:0;}
   .proc-flow-pulse{
-    position:absolute; top:50%; left:0; width:7px; height:7px; margin-top:-3.5px; margin-left:-3.5px;
+    position:absolute; left:50%; top:0; width:7px; height:7px; margin-left:-3.5px; margin-top:-3.5px;
     border-radius:50%; background:#9DB2FF; box-shadow:0 0 12px 3px rgba(140,160,255,0.75);
-    animation:proc-flow-move 6s linear infinite;
+    animation:proc-flow-move-v 7s linear infinite;
   }
-  @keyframes proc-flow-move{
-    0%{left:0%; opacity:0;}
+  @keyframes proc-flow-move-v{
+    0%{top:0%; opacity:0;}
     4%{opacity:1;}
     96%{opacity:1;}
-    100%{left:100%; opacity:0;}
+    100%{top:100%; opacity:0;}
   }
 
-  .proc-steps{display:grid; grid-template-columns:repeat(5,1fr); gap:20px; position:relative; z-index:1;}
-  .proc-step{position:relative;}
+  .proc-steps{display:flex; flex-direction:column; gap:16px; position:relative; z-index:1;}
+  .proc-step{position:relative; display:flex;}
   .proc-dot{
-    width:44px; height:44px; border-radius:50%; border:1px solid var(--line-on-dark);
+    position:absolute; left:-70px; top:0;
+    width:50px; height:50px; border-radius:50%; border:1px solid var(--line-on-dark);
     background:var(--navy); display:flex; align-items:center; justify-content:center;
-    color:#8CA0FF; margin-bottom:20px; position:relative;
+    color:#8CA0FF; z-index:2;
     transition:border-color 0.3s ease, background 0.3s ease;
-    animation:proc-node-flash 6s ease-in-out infinite;
+    animation:proc-node-flash 7s ease-in-out infinite;
   }
-  .proc-icon{width:19px; height:19px;}
+  .proc-icon{width:21px; height:21px;}
   .proc-step:nth-child(1) .proc-dot{animation-delay:0.42s;}
-  .proc-step:nth-child(2) .proc-dot{animation-delay:1.62s;}
-  .proc-step:nth-child(3) .proc-dot{animation-delay:2.82s;}
-  .proc-step:nth-child(4) .proc-dot{animation-delay:4.02s;}
-  .proc-step:nth-child(5) .proc-dot{animation-delay:5.22s;}
+  .proc-step:nth-child(2) .proc-dot{animation-delay:1.82s;}
+  .proc-step:nth-child(3) .proc-dot{animation-delay:3.22s;}
+  .proc-step:nth-child(4) .proc-dot{animation-delay:4.62s;}
+  .proc-step:nth-child(5) .proc-dot{animation-delay:6.02s;}
   @keyframes proc-node-flash{
     0%{box-shadow:0 0 0 0 rgba(140,160,255,0);}
     3%{box-shadow:0 0 0 9px rgba(140,160,255,0.32);}
@@ -334,10 +335,17 @@
     100%{box-shadow:0 0 0 0 rgba(140,160,255,0);}
   }
   .proc-step.in-view .proc-dot{border-color:var(--accent); background:var(--accent-deep);}
-  .proc-tag{font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.1em; color:#5B6180; text-transform:uppercase; display:block; margin-bottom:10px;}
-  .proc-step h3{font-family:'Space Grotesk'; font-weight:500; font-size:16px; margin-bottom:10px;}
-  .proc-step p{font-size:13px; line-height:1.6; color:var(--muted-on-dark); margin-bottom:14px;}
-  .proc-out{font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.02em; color:#7A8199; display:block; padding-top:12px; border-top:1px solid var(--line-on-dark);}
+
+  /* banda de capa: ancho completo, apiladas verticalmente como un stack técnico */
+  .proc-layer{
+    flex:1; display:grid; grid-template-columns:190px 1fr 200px; gap:24px; align-items:center;
+    border:1px solid var(--line-on-dark); border-radius:10px; padding:22px 28px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.035), rgba(255,255,255,0));
+  }
+  .proc-tag{font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.1em; color:#5B6180; text-transform:uppercase; display:block; margin-bottom:8px;}
+  .proc-layer h3{font-family:'Space Grotesk'; font-weight:500; font-size:17px;}
+  .proc-step p{font-size:13px; line-height:1.6; color:var(--muted-on-dark);}
+  .proc-out{font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.02em; color:#7A8199; line-height:1.6; border-left:1px solid var(--line-on-dark); padding-left:20px;}
   @media (prefers-reduced-motion: reduce){
     .proc-flow-pulse{display:none;}
     .proc-dot{animation:none;}
@@ -437,9 +445,12 @@
     .declaration, .caps, .process, .sectors, .engage, .diff, .company, .cta-final{padding-left:20px; padding-right:20px;}
     .decl-grid{grid-template-columns:1fr; gap:32px;}
     .caps-list{grid-template-columns:1fr;}
-    .proc-steps{grid-template-columns:1fr; gap:32px;}
     .proc-flow-track{display:none;}
-    .proc-line-wrap{padding-top:0;}
+    .proc-line-wrap{padding-left:0;}
+    .proc-step{flex-direction:column; gap:16px;}
+    .proc-dot{position:static; margin-bottom:4px;}
+    .proc-layer{grid-template-columns:1fr; gap:12px;}
+    .proc-out{border-left:none; border-top:1px solid var(--line-on-dark); padding-left:0; padding-top:12px;}
     .sectors-grid{grid-template-columns:1fr;}
     .engage-grid{grid-template-columns:1fr; gap:28px;}
     .engage-item{border-left:none !important; padding-left:0 !important;}
@@ -618,38 +629,43 @@
     <div class="proc-steps" id="procSteps">
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6"/><path d="M15 15l5 5"/></svg></div>
-        <span class="proc-tag">Fase 01</span>
-        <h3>Comprender</h3>
-        <p>Analizamos la operación, los usuarios, los sistemas actuales y el resultado que necesita alcanzarse.</p>
-        <span class="proc-out">Entregable — diagnóstico operativo</span>
+        <div class="proc-layer">
+          <div><span class="proc-tag">Capa 01 · Fase 01</span><h3>Comprender</h3></div>
+          <p>Analizamos la operación, los usuarios, los sistemas actuales y el resultado que necesita alcanzarse.</p>
+          <span class="proc-out">Entregable<br>Diagnóstico operativo</span>
+        </div>
       </div>
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l3.5-1L18 8.5 15.5 6 5 16.5 4 20z"/><path d="M13.5 7.5l3 3"/></svg></div>
-        <span class="proc-tag">Fase 02</span>
-        <h3>Diseñar</h3>
-        <p>Definimos arquitectura, flujos de datos e integraciones, con el alcance técnico ya delimitado.</p>
-        <span class="proc-out">Entregable — arquitectura técnica</span>
+        <div class="proc-layer">
+          <div><span class="proc-tag">Capa 02 · Fase 02</span><h3>Diseñar</h3></div>
+          <p>Definimos arquitectura, flujos de datos e integraciones, con el alcance técnico ya delimitado.</p>
+          <span class="proc-out">Entregable<br>Arquitectura técnica</span>
+        </div>
       </div>
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6L4 12l5 6"/><path d="M15 6l5 6-5 6"/></svg></div>
-        <span class="proc-tag">Fase 03</span>
-        <h3>Construir</h3>
-        <p>Desarrollamos mediante ciclos progresivos de validación, con entregas revisables en cada etapa.</p>
-        <span class="proc-out">Entregable — sistema funcional por ciclos</span>
+        <div class="proc-layer">
+          <div><span class="proc-tag">Capa 03 · Fase 03</span><h3>Construir</h3></div>
+          <p>Desarrollamos mediante ciclos progresivos de validación, con entregas revisables en cada etapa.</p>
+          <span class="proc-out">Entregable<br>Sistema funcional por ciclos</span>
+        </div>
       </div>
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v10"/><path d="M8 7l4-4 4 4"/><path d="M5 21c1-4 3-6 7-6s6 2 7 6"/></svg></div>
-        <span class="proc-tag">Fase 04</span>
-        <h3>Desplegar</h3>
-        <p>Implementamos la solución y preparamos infraestructura, accesos y usuarios para operar.</p>
-        <span class="proc-out">Entregable — sistema en producción</span>
+        <div class="proc-layer">
+          <div><span class="proc-tag">Capa 04 · Fase 04</span><h3>Desplegar</h3></div>
+          <p>Implementamos la solución y preparamos infraestructura, accesos y usuarios para operar.</p>
+          <span class="proc-out">Entregable<br>Sistema en producción</span>
+        </div>
       </div>
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 11A8 8 0 0 0 6.3 6.3M4 13a8 8 0 0 0 13.7 4.7"/><path d="M18 4v4h-4M6 20v-4h4"/></svg></div>
-        <span class="proc-tag">Fase 05</span>
-        <h3>Operar</h3>
-        <p>Mantenemos, monitoreamos y evolucionamos el sistema conforme cambian las necesidades reales.</p>
-        <span class="proc-out">Entregable — soporte y evolución continua</span>
+        <div class="proc-layer">
+          <div><span class="proc-tag">Capa 05 · Fase 05</span><h3>Operar</h3></div>
+          <p>Mantenemos, monitoreamos y evolucionamos el sistema conforme cambian las necesidades reales.</p>
+          <span class="proc-out">Entregable<br>Soporte y evolución continua</span>
+        </div>
       </div>
     </div>
   </div>
