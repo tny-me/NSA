@@ -152,10 +152,11 @@
   .chip.active{color:#fff;}
   .chip:hover:not(.active){background:var(--paper);}
 
-  /* ---------------- HERO ILLUSTRATION (varias piezas, una visible a la vez) ---------------- */
-  .hero-illustration{position:relative; width:100%; aspect-ratio:560/400; overflow:hidden;}
+  /* ---------------- HERO ILLUSTRATION (foto por industria, una visible a la vez) ---------------- */
+  .hero-illustration{position:relative; width:100%; aspect-ratio:560/400; overflow:hidden; border-radius:10px;}
   .hero-illustration .sysmap{
     position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; filter:grayscale(30%) contrast(1.08) brightness(0.94) saturate(0.9);
     opacity:0; transform:translateX(100%);
     transition:transform 0.7s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
   }
@@ -463,13 +464,17 @@
 </div>
 
 <div class="chip-row" id="chipRow">
-  <button type="button" class="chip active" data-i="0"><span class="chip-fill"></span><span class="chip-label">Deployment Model</span></button>
-  <button type="button" class="chip" data-i="1"><span class="chip-fill"></span><span class="chip-label">Desarrollo de software</span></button>
-  <button type="button" class="chip" data-i="2"><span class="chip-fill"></span><span class="chip-label">Integración de sistemas</span></button>
-  <button type="button" class="chip" data-i="3"><span class="chip-fill"></span><span class="chip-label">Automatización</span></button>
-  <button type="button" class="chip" data-i="4"><span class="chip-fill"></span><span class="chip-label">IA aplicada</span></button>
-  <button type="button" class="chip" data-i="5"><span class="chip-fill"></span><span class="chip-label">Sectores</span></button>
-  <button type="button" class="chip" data-i="6"><span class="chip-fill"></span><span class="chip-label">Compañía</span></button>
+  <button type="button" class="chip active" data-i="0"><span class="chip-fill"></span><span class="chip-label">Educación</span></button>
+  <button type="button" class="chip" data-i="1"><span class="chip-fill"></span><span class="chip-label">Salud</span></button>
+  <button type="button" class="chip" data-i="2"><span class="chip-fill"></span><span class="chip-label">Construcción</span></button>
+  <button type="button" class="chip" data-i="3"><span class="chip-fill"></span><span class="chip-label">Comercio y retail</span></button>
+  <button type="button" class="chip" data-i="4"><span class="chip-fill"></span><span class="chip-label">Logística y distribución</span></button>
+  <button type="button" class="chip" data-i="5"><span class="chip-fill"></span><span class="chip-label">Manufactura</span></button>
+  <button type="button" class="chip" data-i="6"><span class="chip-fill"></span><span class="chip-label">Alimentos y bebidas</span></button>
+  <button type="button" class="chip" data-i="7"><span class="chip-fill"></span><span class="chip-label">Servicios profesionales</span></button>
+  <button type="button" class="chip" data-i="8"><span class="chip-fill"></span><span class="chip-label">Sector inmobiliario</span></button>
+  <button type="button" class="chip" data-i="9"><span class="chip-fill"></span><span class="chip-label">Hospitalidad</span></button>
+  <button type="button" class="chip" data-i="10"><span class="chip-fill"></span><span class="chip-label">Agroindustria</span></button>
 </div>
 
 <!-- ================= HERO ================= -->
@@ -478,9 +483,9 @@
   <div class="hero-top">
     <div>
       <div class="hero-copy-dynamic" id="heroCopyDynamic">
-        <div class="eyebrow load-in" style="transition-delay:0.05s;"><span class="dash"></span><span id="heroEyebrow">Deployment Model</span></div>
-        <h1 class="load-in" id="heroTitle" style="transition-delay:0.15s;">Del problema a la implementación.</h1>
-        <p class="load-in" id="heroDesc" style="transition-delay:0.25s;">Cinco etapas, una sola responsabilidad continua: comprender, diseñar, construir, desplegar y operar — hasta que el sistema funcione dentro de la operación real.</p>
+        <div class="eyebrow load-in" style="transition-delay:0.05s;"><span class="dash"></span><span id="heroEyebrow">Educación</span></div>
+        <h1 class="load-in" id="heroTitle" style="transition-delay:0.15s;">Infraestructura digital para operar instituciones educativas.</h1>
+        <p class="load-in" id="heroDesc" style="transition-delay:0.25s;">Inscripciones, alumnos, docentes, asistencia, evaluaciones, pagos y comunicación con familias — coordinados desde un mismo sistema institucional.</p>
       </div>
       <div class="hero-actions load-in" style="transition-delay:0.35s;">
         <a href="#contact" class="btn-primary">Iniciar un proyecto</a>
@@ -490,106 +495,17 @@
     <div class="load-in" style="transition-delay:0.3s;">
       <!-- Blueprint técnico: una ilustración por chip, sin imágenes fotográficas -->
       <div class="hero-illustration" id="heroIllustration">
-        <svg class="sysmap is-active" data-slide="0" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-          <line x1="80" y1="140" x2="480" y2="140"/>
-          <circle cx="80" cy="140" r="24"/>
-          <circle cx="180" cy="140" r="24"/>
-          <circle cx="280" cy="140" r="24"/>
-          <circle cx="380" cy="140" r="24"/>
-          <circle cx="480" cy="140" r="24" stroke="#5B8AFF"/>
-          <circle cx="480" cy="140" r="4" fill="#5B8AFF" stroke="none"/>
-          <g font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">
-            <text x="55" y="200">COMPRENDER</text>
-            <text x="152" y="200">DISEÑAR</text>
-            <text x="253" y="200">CONSTRUIR</text>
-            <text x="349" y="200">DESPLEGAR</text>
-            <text x="459" y="200">OPERAR</text>
-            <text x="40" y="260">DEPLOYMENT MODEL / 5 STAGES</text>
-          </g>
-          <path d="M40 300 H520" stroke-dasharray="2 5"/>
-        </svg>
-        <svg class="sysmap" data-slide="1" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-          <rect x="60" y="40" width="440" height="280" rx="6"/>
-          <line x1="60" y1="72" x2="500" y2="72"/>
-          <circle cx="78" cy="56" r="3" fill="#5B8AFF" stroke="none"/>
-          <circle cx="94" cy="56" r="3"/>
-          <circle cx="110" cy="56" r="3"/>
-          <g font-family="IBM Plex Mono" font-size="10" fill="#7A8199" stroke="none">
-            <text x="90" y="105">function operar(sistema) {</text>
-            <text x="110" y="128">construir(problema);</text>
-            <text x="110" y="151" fill="#5B8AFF">desplegar(sistema);</text>
-            <text x="110" y="174">operar.continuo = true;</text>
-            <text x="90" y="197">}</text>
-          </g>
-          <line x1="90" y1="230" x2="330" y2="230"/>
-          <line x1="90" y1="248" x2="270" y2="248"/>
-          <text x="60" y="352" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">DESARROLLO DE SOFTWARE</text>
-        </svg>
-        <svg class="sysmap" data-slide="2" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-          <circle cx="280" cy="170" r="30"/>
-          <circle cx="280" cy="170" r="4" fill="#5B8AFF" stroke="none"/>
-          <circle cx="120" cy="80" r="20"/>
-          <circle cx="440" cy="80" r="20"/>
-          <circle cx="120" cy="270" r="20"/>
-          <circle cx="440" cy="270" r="20"/>
-          <line x1="138" y1="95" x2="255" y2="155" stroke-dasharray="3 4"/>
-          <line x1="422" y1="95" x2="305" y2="155" stroke-dasharray="3 4"/>
-          <line x1="138" y1="255" x2="255" y2="188" stroke-dasharray="3 4"/>
-          <line x1="422" y1="255" x2="305" y2="188" stroke-dasharray="3 4"/>
-          <text x="40" y="350" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">INTEGRACIÓN DE SISTEMAS / N NODOS</text>
-        </svg>
-        <svg class="sysmap" data-slide="3" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-          <circle cx="280" cy="170" r="100"/>
-          <path d="M280 70 a100 100 0 0 1 87 50" stroke="#5B8AFF"/>
-          <circle cx="280" cy="70" r="4" fill="#5B8AFF" stroke="none"/>
-          <circle cx="180" cy="170" r="3"/>
-          <circle cx="280" cy="270" r="3"/>
-          <circle cx="380" cy="170" r="3"/>
-          <text x="248" y="176" font-family="IBM Plex Mono" font-size="11" fill="#7A8199" stroke="none">AUTO</text>
-          <text x="40" y="330" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">AUTOMATIZACIÓN / CICLO CONTINUO</text>
-        </svg>
-        <svg class="sysmap" data-slide="4" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-          <circle cx="100" cy="100" r="6"/><circle cx="100" cy="180" r="6"/><circle cx="100" cy="260" r="6"/>
-          <circle cx="280" cy="70" r="6"/><circle cx="280" cy="140" r="6" fill="#5B8AFF" stroke="none"/><circle cx="280" cy="210" r="6"/><circle cx="280" cy="280" r="6"/>
-          <circle cx="460" cy="120" r="6"/><circle cx="460" cy="220" r="6"/>
-          <g stroke-dasharray="2 4">
-            <line x1="100" y1="100" x2="280" y2="70"/>
-            <line x1="100" y1="100" x2="280" y2="140"/>
-            <line x1="100" y1="180" x2="280" y2="140"/>
-            <line x1="100" y1="180" x2="280" y2="210"/>
-            <line x1="100" y1="260" x2="280" y2="210"/>
-            <line x1="100" y1="260" x2="280" y2="280"/>
-            <line x1="280" y1="70" x2="460" y2="120"/>
-            <line x1="280" y1="140" x2="460" y2="120"/>
-            <line x1="280" y1="210" x2="460" y2="220"/>
-            <line x1="280" y1="280" x2="460" y2="220"/>
-          </g>
-          <text x="40" y="350" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">IA APLICADA / INFERENCIA CONTROLADA</text>
-        </svg>
-        <svg class="sysmap" data-slide="5" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-          <rect x="60" y="40" width="200" height="120" rx="4"/>
-          <rect x="300" y="40" width="200" height="120" rx="4"/>
-          <rect x="60" y="200" width="200" height="120" rx="4"/>
-          <rect x="300" y="200" width="200" height="120" rx="4" stroke="#5B8AFF"/>
-          <circle cx="76" cy="56" r="3" fill="#5B8AFF" stroke="none"/>
-          <g font-family="IBM Plex Mono" font-size="10" fill="#7A8199" stroke="none">
-            <text x="80" y="100">EMPRESAS</text>
-            <text x="320" y="100">EDUCACIÓN</text>
-            <text x="80" y="260">ORGANIZACIONES</text>
-            <text x="320" y="260">OPERACIONES</text>
-          </g>
-        </svg>
-        <svg class="sysmap" data-slide="6" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" stroke="#B7BCCC" stroke-width="1" fill="none">
-          <rect x="140" y="60" width="280" height="260"/>
-          <line x1="140" y1="130" x2="420" y2="130"/>
-          <line x1="140" y1="200" x2="420" y2="200"/>
-          <line x1="140" y1="260" x2="420" y2="260"/>
-          <line x1="210" y1="60" x2="210" y2="320"/>
-          <line x1="280" y1="60" x2="280" y2="320"/>
-          <line x1="350" y1="60" x2="350" y2="320"/>
-          <circle cx="158" cy="80" r="3" fill="#5B8AFF" stroke="none"/>
-          <text x="40" y="360" font-family="IBM Plex Mono" font-size="9" fill="#7A8199" stroke="none">UNITED DEPLOYMENT SYSTEMS GROUP</text>
-        </svg>
+        <img class="sysmap is-active" data-slide="0" src="/assets/img/hero/educacion.jpg" alt="Educación">
+        <img class="sysmap" data-slide="1" src="/assets/img/hero/salud.jpg" alt="Salud">
+        <img class="sysmap" data-slide="2" src="/assets/img/hero/construccion.jpg" alt="Construcción">
+        <img class="sysmap" data-slide="3" src="/assets/img/hero/comercio-retail.jpg" alt="Comercio y retail">
+        <img class="sysmap" data-slide="4" src="/assets/img/hero/logistica-distribucion.jpg" alt="Logística y distribución">
+        <img class="sysmap" data-slide="5" src="/assets/img/hero/manufactura.jpg" alt="Manufactura">
+        <img class="sysmap" data-slide="6" src="/assets/img/hero/alimentos-bebidas.jpg" alt="Alimentos y bebidas">
+        <img class="sysmap" data-slide="7" src="/assets/img/hero/servicios-profesionales.jpg" alt="Servicios profesionales">
+        <img class="sysmap" data-slide="8" src="/assets/img/hero/sector-inmobiliario.jpg" alt="Sector inmobiliario">
+        <img class="sysmap" data-slide="9" src="/assets/img/hero/hospitalidad.jpg" alt="Hospitalidad">
+        <img class="sysmap" data-slide="10" src="/assets/img/hero/agroindustria.jpg" alt="Agroindustria">
       </div>
     </div>
   </div>
@@ -933,13 +849,17 @@
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const SLIDE_MS = 6000;
     const slides = [
-      { eyebrow:'Deployment Model', title:'Del problema a la implementación.', desc:'Cinco etapas, una sola responsabilidad continua: comprender, diseñar, construir, desplegar y operar — hasta que el sistema funcione dentro de la operación real.' },
-      { eyebrow:'Desarrollo de software', title:'Software construido alrededor del problema.', desc:'Plataformas web, aplicaciones empresariales, herramientas internas y sistemas administrativos a medida — no plantillas genéricas adaptadas a la fuerza.' },
-      { eyebrow:'Integración de sistemas', title:'Todo conectado, nada aislado.', desc:'Conectamos bases de datos, servicios y herramientas de terceros con la operación existente, sin duplicar información ni procesos.' },
-      { eyebrow:'Automatización', title:'Menos trabajo manual, más operación.', desc:'Digitalizamos procesos, flujos de trabajo, generación documental y seguimiento operativo para que tu equipo deje de repetir tareas.' },
-      { eyebrow:'IA aplicada', title:'Inteligencia artificial, con control.', desc:'Asistentes, análisis, clasificación y búsqueda documental integrados en procesos controlados — no experimentos sueltos.' },
-      { eyebrow:'Sectores', title:'Tecnología aplicable a organizaciones reales.', desc:'Empresas, instituciones educativas, organizaciones y operaciones especializadas que no pueden resolverse con productos comerciales genéricos.' },
-      { eyebrow:'Compañía', title:'United Deployment Systems Group.', desc:'Una empresa privada de tecnología e ingeniería de software que diseña, desarrolla, integra y opera soluciones digitales de principio a fin.' }
+      { eyebrow:'Educación', title:'Infraestructura digital para operar instituciones educativas.', desc:'Inscripciones, alumnos, docentes, asistencia, evaluaciones, pagos y comunicación con familias — coordinados desde un mismo sistema institucional.' },
+      { eyebrow:'Salud', title:'Sistemas clínicos y operativos para coordinar la atención.', desc:'Pacientes, citas, expedientes, tratamientos e inventarios médicos — la operación completa de clínicas y centros de atención, en un mismo lugar.' },
+      { eyebrow:'Construcción', title:'Control operativo para proyectos dentro y fuera del campo.', desc:'Avances de obra, presupuestos, materiales, contratistas e incidencias — visibles desde la oficina y desde el campo, en tiempo real.' },
+      { eyebrow:'Comercio y retail', title:'Tecnología para conectar ventas, inventario y clientes.', desc:'Ventas, inventario, pedidos y clientes conectados entre sucursales, proveedores y canales — sin importar si la operación es física, digital o ambas.' },
+      { eyebrow:'Logística y distribución', title:'Sistemas para coordinar cada movimiento de la operación.', desc:'Rutas, unidades, almacenes y entregas bajo un mismo sistema de seguimiento, con visibilidad total sobre cada movimiento en tiempo real.' },
+      { eyebrow:'Manufactura', title:'Control digital de producción, recursos y calidad.', desc:'Órdenes de producción, materias primas, mantenimiento y trazabilidad — el control que exige una planta que no puede detenerse.' },
+      { eyebrow:'Alimentos y bebidas', title:'Sistemas para controlar producción, servicio y abastecimiento.', desc:'Pedidos, recetas, costos, inventario y mermas — la operación diaria de cada sucursal, bajo control desde un mismo sistema.' },
+      { eyebrow:'Servicios profesionales', title:'Una plataforma para coordinar clientes, proyectos y resultados.', desc:'Clientes, contratos, proyectos y facturación en un solo flujo — sin hojas de cálculo sueltas ni procesos paralelos.' },
+      { eyebrow:'Sector inmobiliario', title:'Tecnología para gestionar propiedades y oportunidades comerciales.', desc:'Inmuebles, prospectos, asesores y contratos con visibilidad completa, desde el primer recorrido hasta el cierre de la operación.' },
+      { eyebrow:'Hospitalidad', title:'Sistemas para coordinar la experiencia y la operación.', desc:'Reservaciones, huéspedes, habitaciones y mantenimiento coordinados en tiempo real — la experiencia y la operación, alineadas.' },
+      { eyebrow:'Agroindustria', title:'Tecnología para coordinar producción, campo y distribución.', desc:'Cultivos, cosechas, maquinaria y trazabilidad — del campo a la comercialización, dentro de una sola operación digital.' }
     ];
 
     const chips = Array.from(document.querySelectorAll('#chipRow .chip'));
