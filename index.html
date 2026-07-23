@@ -313,7 +313,21 @@
   }
 
   .proc-steps{display:flex; flex-direction:column; gap:16px; position:relative; z-index:1;}
-  .proc-step{position:relative; display:flex;}
+  /* cada capa entra como si se arrastrara y se soltara en su lugar: offset + rotación leve, con "snap" al encajar */
+  .proc-step{
+    position:relative; display:flex;
+    opacity:0; transform:translate(36px,-22px) rotate(-3deg) scale(0.95);
+    transition:opacity 0.55s cubic-bezier(0.34,1.56,0.64,1), transform 0.55s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .proc-step.in-view{opacity:1; transform:translate(0,0) rotate(0) scale(1);}
+  .proc-step:nth-child(1){transition-delay:0s;}
+  .proc-step:nth-child(2){transition-delay:0.12s;}
+  .proc-step:nth-child(3){transition-delay:0.24s;}
+  .proc-step:nth-child(4){transition-delay:0.36s;}
+  .proc-step:nth-child(5){transition-delay:0.48s;}
+  @media (prefers-reduced-motion: reduce){
+    .proc-step{opacity:1; transform:none; transition:none;}
+  }
   .proc-dot{
     position:absolute; left:-70px; top:0;
     width:50px; height:50px; border-radius:50%; border:1px solid var(--line-on-dark);
@@ -338,10 +352,15 @@
 
   /* banda de capa: ancho completo, apiladas verticalmente como un stack técnico */
   .proc-layer{
-    flex:1; display:grid; grid-template-columns:190px 1fr 200px; gap:24px; align-items:center;
-    border:1px solid var(--line-on-dark); border-radius:10px; padding:22px 28px;
+    flex:1; display:grid; grid-template-columns:18px 190px 1fr 200px; gap:20px; align-items:center;
+    border:1px solid var(--line-on-dark); border-radius:10px; padding:22px 24px;
     background:linear-gradient(90deg, rgba(255,255,255,0.035), rgba(255,255,255,0));
+    transition:border-color 0.4s ease, background 0.4s ease;
   }
+  .proc-step.in-view .proc-layer{border-color:rgba(140,160,255,0.4);}
+  /* asa de arrastre: refuerza la lectura de "bloque" tipo herramienta drag-and-drop */
+  .proc-grip{display:grid; grid-template-columns:repeat(2,3px); grid-auto-rows:3px; gap:3px; justify-self:start;}
+  .proc-grip span{width:3px; height:3px; border-radius:50%; background:#3E4358;}
   .proc-tag{font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.1em; color:#5B6180; text-transform:uppercase; display:block; margin-bottom:8px;}
   .proc-layer h3{font-family:'Space Grotesk'; font-weight:500; font-size:17px;}
   .proc-step p{font-size:13px; line-height:1.6; color:var(--muted-on-dark);}
@@ -450,6 +469,7 @@
     .proc-step{flex-direction:column; gap:16px;}
     .proc-dot{position:static; margin-bottom:4px;}
     .proc-layer{grid-template-columns:1fr; gap:12px;}
+    .proc-grip{display:none;}
     .proc-out{border-left:none; border-top:1px solid var(--line-on-dark); padding-left:0; padding-top:12px;}
     .sectors-grid{grid-template-columns:1fr;}
     .engage-grid{grid-template-columns:1fr; gap:28px;}
@@ -630,6 +650,7 @@
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6"/><path d="M15 15l5 5"/></svg></div>
         <div class="proc-layer">
+          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
           <div><span class="proc-tag">Capa 01 · Fase 01</span><h3>Comprender</h3></div>
           <p>Analizamos la operación, los usuarios, los sistemas actuales y el resultado que necesita alcanzarse.</p>
           <span class="proc-out">Entregable<br>Diagnóstico operativo</span>
@@ -638,6 +659,7 @@
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l3.5-1L18 8.5 15.5 6 5 16.5 4 20z"/><path d="M13.5 7.5l3 3"/></svg></div>
         <div class="proc-layer">
+          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
           <div><span class="proc-tag">Capa 02 · Fase 02</span><h3>Diseñar</h3></div>
           <p>Definimos arquitectura, flujos de datos e integraciones, con el alcance técnico ya delimitado.</p>
           <span class="proc-out">Entregable<br>Arquitectura técnica</span>
@@ -646,6 +668,7 @@
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6L4 12l5 6"/><path d="M15 6l5 6-5 6"/></svg></div>
         <div class="proc-layer">
+          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
           <div><span class="proc-tag">Capa 03 · Fase 03</span><h3>Construir</h3></div>
           <p>Desarrollamos mediante ciclos progresivos de validación, con entregas revisables en cada etapa.</p>
           <span class="proc-out">Entregable<br>Sistema funcional por ciclos</span>
@@ -654,6 +677,7 @@
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v10"/><path d="M8 7l4-4 4 4"/><path d="M5 21c1-4 3-6 7-6s6 2 7 6"/></svg></div>
         <div class="proc-layer">
+          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
           <div><span class="proc-tag">Capa 04 · Fase 04</span><h3>Desplegar</h3></div>
           <p>Implementamos la solución y preparamos infraestructura, accesos y usuarios para operar.</p>
           <span class="proc-out">Entregable<br>Sistema en producción</span>
@@ -662,6 +686,7 @@
       <div class="proc-step">
         <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 11A8 8 0 0 0 6.3 6.3M4 13a8 8 0 0 0 13.7 4.7"/><path d="M18 4v4h-4M6 20v-4h4"/></svg></div>
         <div class="proc-layer">
+          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
           <div><span class="proc-tag">Capa 05 · Fase 05</span><h3>Operar</h3></div>
           <p>Mantenemos, monitoreamos y evolucionamos el sistema conforme cambian las necesidades reales.</p>
           <span class="proc-out">Entregable<br>Soporte y evolución continua</span>
