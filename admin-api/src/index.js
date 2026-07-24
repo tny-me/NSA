@@ -124,6 +124,37 @@ async function syncProjectProgress(env, projectId) {
     .run();
 }
 
+const REQUEST_TO_EMAIL = "anthoniomoreno1@gmail.com";
+
+async function sendRequestEmail(env, data) {
+  const subject = `Solicitud de proyecto — ${data.org} (${data.folio})`;
+  const text =
+    `Folio: ${data.folio}\n` +
+    `Organización / Nombre: ${data.org}\n` +
+    `Correo de contacto: ${data.mail}\n` +
+    `Tipo de necesidad: ${data.tipo}\n` +
+    `Urgencia: ${data.urgencia}\n\n` +
+    `Descripción de la necesidad:\n${data.desc}`;
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "UDSG <onboarding@resend.dev>",
+      to: [REQUEST_TO_EMAIL],
+      reply_to: data.mail,
+      subject,
+      text,
+    }),
+  });
+  if (!res.ok) {
+    const errBody = await res.text().catch(() => "");
+    throw new Error(`Resend ${res.status}: ${errBody}`);
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -155,6 +186,27 @@ export default {
       if (url.pathname === "/api/me" && request.method === "GET") {
         const authed = await requireAuth(request, env);
         return json({ ok: authed }, authed ? 200 : 401, cors);
+      }
+
+      // ---- solicitud pública desde el panel "Iniciar un proyecto" del sitio ----
+      if (url.pathname === "/api/solicitudes" && request.method === "POST") {
+        const body = await request.json().catch(() => ({}));
+        const org = (body.org || "").trim();
+        const mail = (body.mail || "").trim();
+        const tipo = (body.tipo || "").trim();
+        const urgencia = (body.urgencia || "").trim();
+        const desc = (body.desc || "").trim();
+        const mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
+        if (!org || !mailOk || desc.length < 20) {
+          return json({ ok: false, error: "Revisa los campos del formulario." }, 400, cors);
+        }
+        const folio = "UDSG-" + new Date().getFullYear() + "-" + String(Math.floor(1000 + Math.random() * 9000));
+        try {
+          await sendRequestEmail(env, { org, mail, tipo, urgencia, desc, folio });
+        } catch (err) {
+          return json({ ok: false, error: "No se pudo enviar la solicitud. Intenta de nuevo." }, 502, cors);
+        }
+        return json({ ok: true, folio }, 200, cors);
       }
 
       // ---- todo lo demás requiere sesión válida ----

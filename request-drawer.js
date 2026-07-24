@@ -47,29 +47,40 @@
 
   function mark(el, bad) { el.closest('.req-field').classList.toggle('err', bad); }
 
+  const API_URL = 'https://udsg-admin-api.udsg.workers.dev/api/solicitudes';
+
   if (send) {
-    send.addEventListener('click', () => {
+    send.addEventListener('click', async () => {
       const badOrg = !fOrg.value.trim();
       const badMail = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fMail.value.trim());
       const badDesc = fDesc.value.trim().length < 20;
       mark(fOrg, badOrg); mark(fMail, badMail); mark(fDesc, badDesc);
-      if (badOrg || badMail) { msg.style.color = '#FF6B6B'; msg.textContent = '> Revisa los campos marcados.'; return; }
-      if (badDesc) { msg.style.color = '#FF6B6B'; msg.textContent = '> Describe tu necesidad con un poco más de detalle (mín. 20 caracteres).'; return; }
+      if (badOrg || badMail) { msg.style.color = '#B3261E'; msg.textContent = '> Revisa los campos marcados.'; return; }
+      if (badDesc) { msg.style.color = '#B3261E'; msg.textContent = '> Describe tu necesidad con un poco más de detalle (mín. 20 caracteres).'; return; }
       send.disabled = true; send.textContent = 'Transmitiendo...';
-      const folio = 'UDSG-' + new Date().getFullYear() + '-' + String(Math.floor(1000 + Math.random() * 9000));
-      const subject = encodeURIComponent('Solicitud de proyecto — ' + fOrg.value.trim() + ' (' + folio + ')');
-      const bodyText = 'Folio: ' + folio + '\n' +
-        'Organización / Nombre: ' + fOrg.value.trim() + '\n' +
-        'Correo de contacto: ' + fMail.value.trim() + '\n' +
-        'Tipo de necesidad: ' + fTipo.value + '\n' +
-        'Urgencia: ' + fUrg.value + '\n\n' +
-        'Descripción de la necesidad:\n' + fDesc.value.trim();
-      window.location.href = 'mailto:anthoniomoreno1@gmail.com?subject=' + subject + '&body=' + encodeURIComponent(bodyText);
-      setTimeout(() => {
-        msg.style.color = '#3DDC84';
-        msg.textContent = '> Solicitud registrada con folio ' + folio + '. Te contactaremos pronto.';
+      msg.style.color = '#8A8A86'; msg.textContent = '';
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            org: fOrg.value.trim(),
+            mail: fMail.value.trim(),
+            tipo: fTipo.value,
+            urgencia: fUrg.value,
+            desc: fDesc.value.trim(),
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'Error al enviar.');
+        msg.style.color = '#2E6B45';
+        msg.textContent = '> Solicitud registrada con folio ' + data.folio + '. Te contactaremos pronto.';
         send.textContent = 'Solicitud enviada';
-      }, 900);
+      } catch (err) {
+        msg.style.color = '#B3261E';
+        msg.textContent = '> No se pudo enviar. Intenta de nuevo o escríbenos a acceso@udsg.dev.';
+        send.disabled = false; send.textContent = 'Enviar solicitud';
+      }
     });
   }
 })();
