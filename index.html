@@ -533,14 +533,24 @@
   .req-msg{font-family:'JetBrains Mono',monospace; font-size:12px; min-height:16px;}
   .req-note{font-size:11px; color:#8A8A86; line-height:1.5;}
   .req-success{position:absolute; inset:0; z-index:5; display:flex; align-items:center; justify-content:center; pointer-events:none; overflow:hidden;}
-  .req-success-circle{position:absolute; inset:0; background:#2E6B45; clip-path:circle(0% at 50% 100%); transition:clip-path .7s cubic-bezier(0.16,1,0.3,1);}
-  .req-success.is-active .req-success-circle{clip-path:circle(150% at 50% 100%);}
-  .req-success-content{position:relative; z-index:1; text-align:center; opacity:0; transform:translateY(14px); transition:opacity .4s ease .35s, transform .4s ease .35s; padding:0 32px;}
+  .req-success.is-active{pointer-events:auto;}
+  .req-success-circle{position:absolute; inset:0; background:#2E6B45; clip-path:circle(0% at 50% 100%); transition:clip-path .8s cubic-bezier(0.16,1,0.3,1);}
+  .req-success.is-active .req-success-circle{clip-path:circle(150vmax at 50% 100%);}
+  .req-success-close{
+    position:absolute; top:24px; right:24px; z-index:2;
+    background:none; border:1px solid rgba(255,255,255,0.4); color:#fff;
+    width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:15px;
+    opacity:0; transition:opacity .3s ease .55s, background .15s ease;
+  }
+  .req-success.is-active .req-success-close{opacity:1;}
+  .req-success-close:hover{background:rgba(255,255,255,0.15);}
+  .req-success-content{position:relative; z-index:1; text-align:center; opacity:0; transform:translateY(14px); transition:opacity .4s ease .4s, transform .4s ease .4s; padding:0 32px;}
   .req-success.is-active .req-success-content{opacity:1; transform:translateY(0);}
   .req-success-check{width:56px; height:56px; border-radius:50%; border:2px solid #fff; color:#fff; font-size:26px; display:flex; align-items:center; justify-content:center; margin:0 auto 18px;}
   .req-success-msg{color:#fff; font-size:19px; font-weight:600; margin-bottom:8px;}
-  .req-success-folio{color:rgba(255,255,255,0.85); font-family:'JetBrains Mono',monospace; font-size:12.5px;}
-  @media (prefers-reduced-motion:reduce){ .req-success-circle{transition:none;} .req-success-content{transition:none;} }
+  .req-success-folio{color:rgba(255,255,255,0.85); font-family:'JetBrains Mono',monospace; font-size:12.5px; margin-bottom:14px;}
+  .req-success-hint{color:rgba(255,255,255,0.75); font-size:12.5px; line-height:1.5; max-width:260px; margin:0 auto;}
+  @media (prefers-reduced-motion:reduce){ .req-success-circle{transition:none;} .req-success-content{transition:none;} .req-success-close{transition:none;} }
   @media (max-width:560px){ .req-drawer{width:100%;} }
 </style>
 </head>
@@ -917,10 +927,12 @@
   </div>
   <div class="req-success" id="reqSuccess">
     <div class="req-success-circle"></div>
+    <button class="req-success-close" id="reqSuccessClose" type="button" aria-label="Cerrar">✕</button>
     <div class="req-success-content">
       <div class="req-success-check">✓</div>
       <div class="req-success-msg">Solicitud enviada</div>
       <div class="req-success-folio" id="reqSuccessFolio"></div>
+      <div class="req-success-hint">Te contactaremos pronto. Puedes cerrar esta ventana cuando quieras.</div>
     </div>
   </div>
 </aside>

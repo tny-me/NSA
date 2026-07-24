@@ -16,6 +16,7 @@
   const msg = document.getElementById('reqMsg');
   const success = document.getElementById('reqSuccess');
   const successFolio = document.getElementById('reqSuccessFolio');
+  const successClose = document.getElementById('reqSuccessClose');
 
   function openDrawer(e) {
     if (e) e.preventDefault();
@@ -27,10 +28,12 @@
   }
 
   function closeDrawer() {
+    const wasSuccess = success && success.classList.contains('is-active');
     overlay.classList.remove('is-open');
     drawer.classList.remove('is-open');
     drawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (wasSuccess) setTimeout(resetForm, 450);
   }
 
   function resetForm() {
@@ -49,6 +52,7 @@
   });
   overlay.addEventListener('click', closeDrawer);
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (successClose) successClose.addEventListener('click', closeDrawer);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
   });
@@ -91,10 +95,6 @@
         if (!res.ok || !data.ok) throw new Error(data.error || 'Error al enviar.');
         if (successFolio) successFolio.textContent = 'Folio ' + data.folio;
         if (success) success.classList.add('is-active');
-        setTimeout(() => {
-          closeDrawer();
-          setTimeout(resetForm, 450);
-        }, 1900);
       } catch (err) {
         msg.style.color = '#B3261E';
         msg.textContent = '> No se pudo enviar. Intenta de nuevo o escríbenos a acceso@udsg.dev.';
