@@ -7,6 +7,7 @@
   const closeBtn = document.getElementById('reqClose');
   const fOrg = document.getElementById('fOrg');
   const fMail = document.getElementById('fMail');
+  const fPhone = document.getElementById('fPhone');
   const fTipo = document.getElementById('fTipo');
   const fUrg = document.getElementById('fUrg');
   const fDesc = document.getElementById('fDesc');
@@ -66,6 +67,7 @@
           body: JSON.stringify({
             org: fOrg.value.trim(),
             mail: fMail.value.trim(),
+            phone: fPhone ? fPhone.value.trim() : '',
             tipo: fTipo.value,
             urgencia: fUrg.value,
             desc: fDesc.value.trim(),

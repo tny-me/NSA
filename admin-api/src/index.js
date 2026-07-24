@@ -132,6 +132,7 @@ async function sendRequestEmail(env, data) {
     `Folio: ${data.folio}\n` +
     `Organización / Nombre: ${data.org}\n` +
     `Correo de contacto: ${data.mail}\n` +
+    `Teléfono: ${data.phone || "—"}\n` +
     `Tipo de necesidad: ${data.tipo}\n` +
     `Urgencia: ${data.urgencia}\n\n` +
     `Descripción de la necesidad:\n${data.desc}`;
@@ -193,6 +194,7 @@ export default {
         const body = await request.json().catch(() => ({}));
         const org = (body.org || "").trim();
         const mail = (body.mail || "").trim();
+        const phone = (body.phone || "").trim();
         const tipo = (body.tipo || "").trim();
         const urgencia = (body.urgencia || "").trim();
         const desc = (body.desc || "").trim();
@@ -202,7 +204,7 @@ export default {
         }
         const folio = "UDSG-" + new Date().getFullYear() + "-" + String(Math.floor(1000 + Math.random() * 9000));
         try {
-          await sendRequestEmail(env, { org, mail, tipo, urgencia, desc, folio });
+          await sendRequestEmail(env, { org, mail, phone, tipo, urgencia, desc, folio });
         } catch (err) {
           return json({ ok: false, error: "No se pudo enviar la solicitud. Intenta de nuevo." }, 502, cors);
         }
