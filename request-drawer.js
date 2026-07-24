@@ -54,9 +54,10 @@
     send.addEventListener('click', async () => {
       const badOrg = !fOrg.value.trim();
       const badMail = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fMail.value.trim());
+      const badPhone = !fPhone || !fPhone.value.trim();
       const badDesc = fDesc.value.trim().length < 20;
-      mark(fOrg, badOrg); mark(fMail, badMail); mark(fDesc, badDesc);
-      if (badOrg || badMail) { msg.style.color = '#B3261E'; msg.textContent = '> Revisa los campos marcados.'; return; }
+      mark(fOrg, badOrg); mark(fMail, badMail); if (fPhone) mark(fPhone, badPhone); mark(fDesc, badDesc);
+      if (badOrg || badMail || badPhone) { msg.style.color = '#B3261E'; msg.textContent = '> Revisa los campos marcados.'; return; }
       if (badDesc) { msg.style.color = '#B3261E'; msg.textContent = '> Describe tu necesidad con un poco más de detalle (mín. 20 caracteres).'; return; }
       send.disabled = true; send.textContent = 'Transmitiendo...';
       msg.style.color = '#8A8A86'; msg.textContent = '';

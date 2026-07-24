@@ -199,7 +199,7 @@ export default {
         const urgencia = (body.urgencia || "").trim();
         const desc = (body.desc || "").trim();
         const mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
-        if (!org || !mailOk || desc.length < 20) {
+        if (!org || !mailOk || !phone || desc.length < 20) {
           return json({ ok: false, error: "Revisa los campos del formulario." }, 400, cors);
         }
         const folio = "UDSG-" + new Date().getFullYear() + "-" + String(Math.floor(1000 + Math.random() * 9000));
