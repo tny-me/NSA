@@ -45,6 +45,7 @@
     send.disabled = false;
     send.textContent = 'Enviar solicitud';
     if (success) success.classList.remove('is-active');
+    drawer.style.overflow = '';
   }
 
   document.querySelectorAll('.js-open-request').forEach(el => {
@@ -94,6 +95,8 @@
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.ok) throw new Error(data.error || 'Error al enviar.');
         if (successFolio) successFolio.textContent = 'Folio ' + data.folio;
+        drawer.scrollTop = 0;
+        drawer.style.overflow = 'hidden';
         if (success) success.classList.add('is-active');
       } catch (err) {
         msg.style.color = '#B3261E';
