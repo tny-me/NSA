@@ -323,90 +323,61 @@
   @media (prefers-reduced-motion: reduce){ .marquee-track{animation:none;} }
 
   /* ---------------- PROCESS (stepper, not photo) ---------------- */
-  .process{background:var(--navy); color:var(--paper-text); padding:120px 48px;}
-  .proc-line-wrap{max-width:960px; margin:0 auto; position:relative; padding-left:70px;}
+  /* ---------------- DEPLOY (foto de campo + fases + modelo de colaboración, todo en una sola sección) ---------------- */
+  .deploy{position:relative; background:var(--navy); color:var(--paper-text); overflow:hidden;}
+  .deploy-bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%;}
+  .deploy-scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,12,20,0.95) 0%, rgba(10,12,20,0.88) 26%, rgba(10,12,20,0.82) 100%),
+      linear-gradient(90deg, rgba(10,12,20,0.45) 0%, rgba(10,12,20,0.1) 60%);
+  }
+  .deploy-inner{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:120px 48px;}
+  .deploy-head{max-width:640px; margin-bottom:64px;}
+  .deploy-head .sec-label{margin-bottom:18px;}
+  .deploy-head h2{font-family:'Space Grotesk'; font-weight:500; font-size:clamp(28px,3.4vw,42px); line-height:1.15; margin-bottom:18px;}
+  .deploy-lede{font-size:15.5px; line-height:1.7; color:var(--muted-on-dark); max-width:520px;}
 
-  /* pista vertical: tráfico de datos constante — varios paquetes viajando a la vez, sin pausa */
-  .proc-flow-track{position:absolute; top:25px; bottom:25px; left:25px; width:1px; background:var(--line-on-dark); z-index:0;}
-  .proc-flow-track::before, .proc-flow-track::after{
-    content:''; position:absolute; left:-3px; height:1px; width:7px; background:var(--line-on-dark);
-  }
-  .proc-flow-track::before{top:0;} .proc-flow-track::after{bottom:0;}
-  .proc-flow-pulse{
-    position:absolute; left:50%; top:0; width:6px; height:6px; margin-left:-3px; margin-top:-3px;
-    border-radius:50%; background:#9DB2FF; box-shadow:0 0 10px 2px rgba(140,160,255,0.7);
-    animation:proc-flow-move-v 3.6s linear infinite;
-    animation-delay:calc(var(--pi) * -0.6s);
-  }
-  @keyframes proc-flow-move-v{
-    0%{top:0%; opacity:0;}
-    6%{opacity:1;}
-    92%{opacity:1;}
-    100%{top:100%; opacity:0;}
-  }
+  .deploy-body{display:grid; grid-template-columns:1.3fr 1fr; gap:64px; align-items:start;}
+  .deploy-col-label{display:block; font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:#8CA0FF; margin-bottom:24px;}
 
-  .proc-steps{display:flex; flex-direction:column; gap:16px; position:relative; z-index:1;}
-  /* cada capa entra como si se arrastrara y se soltara en su lugar: offset + rotación leve, con "snap" al encajar */
-  .proc-step{
-    position:relative; display:flex;
-    opacity:0; transform:translate(36px,-22px) rotate(-3deg) scale(0.95);
-    transition:opacity 0.55s cubic-bezier(0.34,1.56,0.64,1), transform 0.55s cubic-bezier(0.34,1.56,0.64,1);
+  .deploy-phases{border-top:1px solid var(--line-on-dark);}
+  .phase-row{
+    display:grid; grid-template-columns:44px 1fr; gap:18px; padding:20px 0; border-bottom:1px solid var(--line-on-dark);
+    opacity:0; transform:translateY(16px);
+    transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
   }
-  .proc-step.in-view{opacity:1; transform:translate(0,0) rotate(0) scale(1);}
-  .proc-step:nth-child(1){transition-delay:0s;}
-  .proc-step:nth-child(2){transition-delay:0.12s;}
-  .proc-step:nth-child(3){transition-delay:0.24s;}
-  .proc-step:nth-child(4){transition-delay:0.36s;}
-  .proc-step:nth-child(5){transition-delay:0.48s;}
+  .phase-row.in-view{opacity:1; transform:translateY(0);}
+  .phase-row:nth-child(1){transition-delay:0s;}
+  .phase-row:nth-child(2){transition-delay:0.08s;}
+  .phase-row:nth-child(3){transition-delay:0.16s;}
+  .phase-row:nth-child(4){transition-delay:0.24s;}
+  .phase-row:nth-child(5){transition-delay:0.32s;}
+  .phase-idx{font-family:'IBM Plex Mono'; font-size:13px; color:#5B6180; padding-top:2px;}
+  .phase-row h3{font-family:'Space Grotesk'; font-weight:500; font-size:17px; margin-bottom:6px;}
+  .phase-row p{font-size:13.5px; line-height:1.65; color:var(--muted-on-dark); max-width:420px;}
+
+  .deploy-models{display:flex; flex-direction:column; gap:14px;}
+  .model-card{
+    background:rgba(255,255,255,0.05); border:1px solid var(--line-on-dark); border-radius:12px;
+    padding:24px 26px; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    opacity:0; transform:translateY(16px);
+    transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, background 0.3s ease;
+  }
+  .model-card.in-view{opacity:1; transform:translateY(0);}
+  .model-card:nth-child(1){transition-delay:0.1s;}
+  .model-card:nth-child(2){transition-delay:0.2s;}
+  .model-card:nth-child(3){transition-delay:0.3s;}
+  .model-card:hover{border-color:rgba(140,160,255,0.4); background:rgba(255,255,255,0.08);}
+  .model-code{display:block; font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.08em; color:#7A8199; margin-bottom:12px;}
+  .model-card h3{font-family:'Space Grotesk'; font-weight:500; font-size:16.5px; margin-bottom:8px;}
+  .model-card p{font-size:13px; line-height:1.6; color:var(--muted-on-dark);}
   @media (prefers-reduced-motion: reduce){
-    .proc-step{opacity:1; transform:none; transition:none;}
+    .phase-row, .model-card{opacity:1; transform:none; transition:none;}
   }
-  .proc-dot{
-    position:absolute; left:-70px; top:0;
-    width:50px; height:50px; border-radius:50%; border:1px solid var(--line-on-dark);
-    background:var(--navy); display:flex; align-items:center; justify-content:center;
-    color:#8CA0FF; z-index:2;
-    transition:border-color 0.3s ease, background 0.3s ease;
-    animation:proc-node-flash 0.6s ease-out infinite;
+  @media (max-width:900px){
+    .deploy-body{grid-template-columns:1fr; gap:48px;}
   }
-  .proc-icon{width:21px; height:21px;}
-  .proc-step:nth-child(1) .proc-dot{animation-delay:0.36s;}
-  .proc-step:nth-child(2) .proc-dot{animation-delay:0.48s;}
-  .proc-step:nth-child(3) .proc-dot{animation-delay:0s;}
-  .proc-step:nth-child(4) .proc-dot{animation-delay:0.12s;}
-  .proc-step:nth-child(5) .proc-dot{animation-delay:0.24s;}
-  @keyframes proc-node-flash{
-    0%{box-shadow:0 0 0 0 rgba(140,160,255,0);}
-    15%{box-shadow:0 0 0 8px rgba(140,160,255,0.3);}
-    60%{box-shadow:0 0 0 0 rgba(140,160,255,0);}
-    100%{box-shadow:0 0 0 0 rgba(140,160,255,0);}
-  }
-  .proc-step.in-view .proc-dot{border-color:var(--accent); background:var(--accent-deep);}
-
-  /* banda de capa: ancho completo, apiladas verticalmente como un stack técnico */
-  .proc-layer{
-    flex:1; display:grid; grid-template-columns:18px 190px 1fr 200px; gap:20px; align-items:center;
-    border:1px solid var(--line-on-dark); border-radius:10px; padding:22px 24px;
-    background:linear-gradient(90deg, rgba(255,255,255,0.035), rgba(255,255,255,0));
-    transition:border-color 0.4s ease, background 0.4s ease;
-  }
-  .proc-step.in-view .proc-layer{border-color:rgba(140,160,255,0.4);}
-  /* asa de arrastre: refuerza la lectura de "bloque" tipo herramienta drag-and-drop */
-  .proc-grip{display:grid; grid-template-columns:repeat(2,3px); grid-auto-rows:3px; gap:3px; justify-self:start;}
-  .proc-grip span{width:3px; height:3px; border-radius:50%; background:#3E4358;}
-  .proc-tag{font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.1em; color:#5B6180; text-transform:uppercase; display:block; margin-bottom:8px;}
-  .proc-layer h3{font-family:'Space Grotesk'; font-weight:500; font-size:17px;}
-  .proc-step p{font-size:13px; line-height:1.6; color:var(--muted-on-dark);}
-  .proc-out{font-family:'IBM Plex Mono'; font-size:9.5px; letter-spacing:0.02em; color:#7A8199; line-height:1.6; border-left:1px solid var(--line-on-dark); padding-left:20px;}
-  @media (prefers-reduced-motion: reduce){
-    .proc-flow-pulse{display:none;}
-    .proc-dot{animation:none;}
-  }
-  .process-callout{
-    max-width:1180px; margin:70px auto 0; padding-top:36px; border-top:1px solid var(--line-on-dark);
-    font-family:'Space Grotesk'; font-weight:500; font-size:clamp(19px,2.1vw,27px); line-height:1.4;
-  }
-  .process-callout .accent{color:#8CA0FF;}
 
   /* ---------------- SECTORS ---------------- */
   .sectors{background:var(--gray-50); padding:120px 48px;}
@@ -415,25 +386,6 @@
   .sector-item .snum{font-family:'IBM Plex Mono'; font-size:10.5px; color:var(--accent); display:block; margin-bottom:14px;}
   .sector-item h3{font-family:'Space Grotesk'; font-weight:500; font-size:19px; margin-bottom:12px;}
   .sector-item p{font-size:14px; line-height:1.65; color:var(--ink-soft);}
-
-  /* ---------------- ENGAGEMENT ---------------- */
-  .engage{background:var(--paper); padding:120px 48px;}
-  .engage-grid{max-width:1180px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line);}
-  .engage-item{
-    padding:32px 30px 0 0; border-left:1px solid var(--line);
-    opacity:0; transform:translateY(24px);
-    transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
-  }
-  .engage-item:first-child{border-left:none; padding-left:0;}
-  .engage-item:not(:first-child){padding-left:30px;}
-  .engage-item.in-view{opacity:1; transform:translateY(0);}
-  .engage-item:nth-child(1){transition-delay:0s;}
-  .engage-item:nth-child(2){transition-delay:0.1s;}
-  .engage-item:nth-child(3){transition-delay:0.2s;}
-  .engage-item h3{font-family:'Space Grotesk'; font-weight:500; font-size:18px; margin-bottom:12px; color:var(--ink);}
-  .engage-item p{font-size:14px; line-height:1.7; color:var(--ink-soft); max-width:280px;}
-  .engage-code{display:block; margin-top:20px; padding-top:14px; border-top:1px solid var(--line); font-family:'IBM Plex Mono'; font-size:9.5px; color:#9298A6;}
-  @media (prefers-reduced-motion: reduce){ .engage-item{opacity:1; transform:none;} }
 
   /* ---------------- DIFFERENTIATOR ---------------- */
   .diff{background:var(--navy); color:var(--paper-text); padding:130px 48px;}
@@ -494,19 +446,12 @@
     .hero{padding:32px 24px 0; min-height:520px; border-radius:10px;}
     .hero-top{max-width:100%;}
     .hero-meta{flex-direction:column; align-items:flex-start; gap:6px; margin-top:28px;}
-    .declaration, .caps, .process, .sectors, .engage, .diff, .company, .cta-final{padding-left:20px; padding-right:20px;}
+    .declaration, .caps, .sectors, .diff, .company, .cta-final{padding-left:20px; padding-right:20px;}
     .decl-grid{grid-template-columns:1fr; gap:32px;}
     .caps-list{grid-template-columns:1fr;}
-    .proc-flow-track{display:none;}
-    .proc-line-wrap{padding-left:0;}
-    .proc-step{flex-direction:column; gap:16px;}
-    .proc-dot{position:static; margin-bottom:4px;}
-    .proc-layer{grid-template-columns:1fr; gap:12px;}
-    .proc-grip{display:none;}
-    .proc-out{border-left:none; border-top:1px solid var(--line-on-dark); padding-left:0; padding-top:12px;}
+    .deploy-inner{padding:72px 20px;}
+    .deploy-head{margin-bottom:40px;}
     .sectors-grid{grid-template-columns:1fr;}
-    .engage-grid{grid-template-columns:1fr; gap:28px;}
-    .engage-item{border-left:none !important; padding-left:0 !important;}
     .diff-grid{grid-template-columns:1fr 1fr;}
     .company-grid{grid-template-columns:1fr;}
     .footer-top{grid-template-columns:1fr; gap:28px;}
@@ -807,70 +752,48 @@
   </div>
 </section>
 
-<!-- ================= PROCESS ================= -->
-<section class="process">
-  <div class="sec-head on-dark" style="max-width:1180px; margin-left:auto; margin-right:auto;">
-    <div class="sec-label on-dark"><span class="dash"></span>Deployment model</div>
-    <h2>Del problema a la implementación.</h2>
-  </div>
-  <div class="proc-line-wrap">
-    <div class="proc-flow-track" aria-hidden="true">
-      <span class="proc-flow-pulse" style="--pi:0"></span>
-      <span class="proc-flow-pulse" style="--pi:1"></span>
-      <span class="proc-flow-pulse" style="--pi:2"></span>
-      <span class="proc-flow-pulse" style="--pi:3"></span>
-      <span class="proc-flow-pulse" style="--pi:4"></span>
-      <span class="proc-flow-pulse" style="--pi:5"></span>
+<!-- ================= DEPLOY (foto de campo + fases + modelo de colaboración) ================= -->
+<section class="deploy">
+  <img class="deploy-bg" src="/assets/img/deploy-field.jpg" alt="">
+  <div class="deploy-scrim" aria-hidden="true"></div>
+  <div class="deploy-inner">
+    <div class="deploy-head">
+      <div class="sec-label on-dark"><span class="dash"></span>En campo</div>
+      <h2>Nos desplegamos donde ocurre la operación.</h2>
+      <p class="deploy-lede">Entendemos cada organización desde el lugar donde trabaja, no solo desde una pantalla. Así diseñamos, construimos y acompañamos cada etapa del sistema.</p>
     </div>
-    <div class="proc-steps" id="procSteps">
-      <div class="proc-step">
-        <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6"/><path d="M15 15l5 5"/></svg></div>
-        <div class="proc-layer">
-          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
-          <div><span class="proc-tag">Capa 01 · Fase 01</span><h3>Comprender</h3></div>
-          <p>Analizamos la operación, los usuarios, los sistemas actuales y el resultado que necesita alcanzarse.</p>
-          <span class="proc-out">Entregable<br>Diagnóstico operativo</span>
+    <div class="deploy-body">
+      <div class="deploy-phases" id="deployPhases">
+        <span class="deploy-col-label">Cómo trabajamos</span>
+        <div class="phase-row">
+          <span class="phase-idx">01</span>
+          <div><h3>Comprender</h3><p>Analizamos la operación, los usuarios, los sistemas actuales y el resultado que necesita alcanzarse.</p></div>
+        </div>
+        <div class="phase-row">
+          <span class="phase-idx">02</span>
+          <div><h3>Diseñar</h3><p>Definimos arquitectura, flujos de datos e integraciones, con el alcance técnico ya delimitado.</p></div>
+        </div>
+        <div class="phase-row">
+          <span class="phase-idx">03</span>
+          <div><h3>Construir</h3><p>Desarrollamos mediante ciclos progresivos de validación, con entregas revisables en cada etapa.</p></div>
+        </div>
+        <div class="phase-row">
+          <span class="phase-idx">04</span>
+          <div><h3>Desplegar</h3><p>Implementamos la solución y preparamos infraestructura, accesos y usuarios para operar.</p></div>
+        </div>
+        <div class="phase-row">
+          <span class="phase-idx">05</span>
+          <div><h3>Operar</h3><p>Mantenemos, monitoreamos y evolucionamos el sistema conforme cambian las necesidades reales.</p></div>
         </div>
       </div>
-      <div class="proc-step">
-        <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l3.5-1L18 8.5 15.5 6 5 16.5 4 20z"/><path d="M13.5 7.5l3 3"/></svg></div>
-        <div class="proc-layer">
-          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
-          <div><span class="proc-tag">Capa 02 · Fase 02</span><h3>Diseñar</h3></div>
-          <p>Definimos arquitectura, flujos de datos e integraciones, con el alcance técnico ya delimitado.</p>
-          <span class="proc-out">Entregable<br>Arquitectura técnica</span>
-        </div>
-      </div>
-      <div class="proc-step">
-        <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6L4 12l5 6"/><path d="M15 6l5 6-5 6"/></svg></div>
-        <div class="proc-layer">
-          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
-          <div><span class="proc-tag">Capa 03 · Fase 03</span><h3>Construir</h3></div>
-          <p>Desarrollamos mediante ciclos progresivos de validación, con entregas revisables en cada etapa.</p>
-          <span class="proc-out">Entregable<br>Sistema funcional por ciclos</span>
-        </div>
-      </div>
-      <div class="proc-step">
-        <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v10"/><path d="M8 7l4-4 4 4"/><path d="M5 21c1-4 3-6 7-6s6 2 7 6"/></svg></div>
-        <div class="proc-layer">
-          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
-          <div><span class="proc-tag">Capa 04 · Fase 04</span><h3>Desplegar</h3></div>
-          <p>Implementamos la solución y preparamos infraestructura, accesos y usuarios para operar.</p>
-          <span class="proc-out">Entregable<br>Sistema en producción</span>
-        </div>
-      </div>
-      <div class="proc-step">
-        <div class="proc-dot"><svg class="proc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 11A8 8 0 0 0 6.3 6.3M4 13a8 8 0 0 0 13.7 4.7"/><path d="M18 4v4h-4M6 20v-4h4"/></svg></div>
-        <div class="proc-layer">
-          <span class="proc-grip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span>
-          <div><span class="proc-tag">Capa 05 · Fase 05</span><h3>Operar</h3></div>
-          <p>Mantenemos, monitoreamos y evolucionamos el sistema conforme cambian las necesidades reales.</p>
-          <span class="proc-out">Entregable<br>Soporte y evolución continua</span>
-        </div>
+      <div class="deploy-models" id="deployModels">
+        <span class="deploy-col-label">Modelo de colaboración</span>
+        <div class="model-card"><span class="model-code">MODEL / SCOPE-01</span><h3>Proyecto de desarrollo</h3><p>Diseño, construcción e implementación de una solución con alcance definido.</p></div>
+        <div class="model-card"><span class="model-code">MODEL / OPS-02</span><h3>Operación tecnológica</h3><p>Mantenimiento, soporte, infraestructura, seguridad y evolución mensual de los sistemas.</p></div>
+        <div class="model-card"><span class="model-code">MODEL / UNIT-03</span><h3>Departamento externo de tecnología</h3><p>UDSG coordina desarrollo, infraestructura y decisiones técnicas como unidad externa.</p></div>
       </div>
     </div>
   </div>
-  <p class="process-callout">El proyecto no termina cuando el software se publica. <span class="accent">Termina cuando funciona dentro de la operación.</span></p>
 </section>
 
 <!-- ================= SECTORS ================= -->
@@ -884,19 +807,6 @@
     <div class="sector-item"><span class="snum">02</span><h3>Educación</h3><p>Plataformas académicas, administrativas, financieras y de comunicación institucional.</p></div>
     <div class="sector-item"><span class="snum">03</span><h3>Organizaciones</h3><p>Sistemas para proyectos, personal, beneficiarios, recursos, evidencias y seguimiento.</p></div>
     <div class="sector-item"><span class="snum">04</span><h3>Operaciones especializadas</h3><p>Desarrollo para procesos que no pueden resolverse con productos comerciales genéricos.</p></div>
-  </div>
-</section>
-
-<!-- ================= ENGAGEMENT ================= -->
-<section class="engage">
-  <div class="sec-head" style="max-width:1180px; margin-left:auto; margin-right:auto;">
-    <div class="sec-label"><span class="dash"></span>Engagement</div>
-    <h2>Una capacidad tecnológica adaptada a cada etapa.</h2>
-  </div>
-  <div class="engage-grid">
-    <div class="engage-item"><h3>Proyecto de desarrollo</h3><p>Diseño, construcción e implementación de una solución con alcance definido.</p><span class="engage-code">MODEL / SCOPE-01</span></div>
-    <div class="engage-item"><h3>Operación tecnológica</h3><p>Mantenimiento, soporte, infraestructura, seguridad y evolución mensual de los sistemas.</p><span class="engage-code">MODEL / OPS-02</span></div>
-    <div class="engage-item"><h3>Departamento externo de tecnología</h3><p>UDSG coordina desarrollo, infraestructura y decisiones técnicas como unidad externa.</p><span class="engage-code">MODEL / UNIT-03</span></div>
   </div>
 </section>
 
@@ -1077,7 +987,7 @@
     overlay.querySelectorAll('.menu-links a').forEach(a => a.addEventListener('click', closeMenu));
   })();
 
-  // engagement cards + process dots — scroll reveal
+  // fases y tarjetas de la sección deploy — scroll reveal
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
@@ -1086,7 +996,7 @@
       }
     });
   }, { threshold: 0.3, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.engage-item, .proc-step').forEach(el => io.observe(el));
+  document.querySelectorAll('.phase-row, .model-card').forEach(el => io.observe(el));
 
   // ---- TYPEWRITER: los titulares se "escriben" al entrar en pantalla ----
   (function(){
